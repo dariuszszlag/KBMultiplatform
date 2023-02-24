@@ -1,4 +1,4 @@
-package com.dariusz.kbmultiapp
+package com.dariusz.kbcore
 
 interface Platform {
     val name: String

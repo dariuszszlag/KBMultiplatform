@@ -1,8 +1,8 @@
-package com.dariusz.kbapp
+package com.dariusz.kbembed
 
 import android.content.Context
 
-object KBEmbedBuilder: KBEmbed {
+object KBEmbedBuilder : KBEmbed {
 
     override fun openKB(context: Context) = context.startActivity(MainActivity.newIntent(context))
 

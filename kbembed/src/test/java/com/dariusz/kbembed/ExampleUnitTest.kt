@@ -1,6 +1,6 @@
-package com.dariusz.kbapp
+package com.dariusz.kbembed
 
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 /**

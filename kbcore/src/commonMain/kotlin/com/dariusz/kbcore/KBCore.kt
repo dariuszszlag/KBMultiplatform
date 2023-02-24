@@ -1,4 +1,4 @@
-package com.dariusz.kbmultiapp
+package com.dariusz.kbcore
 
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow

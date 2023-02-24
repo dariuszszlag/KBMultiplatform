@@ -1,4 +1,4 @@
-package com.dariusz.kbapp
+package com.dariusz.kbembed
 
 import android.content.Context
 

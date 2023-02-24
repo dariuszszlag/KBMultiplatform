@@ -1,4 +1,4 @@
-package com.dariusz.kbmultiapp
+package com.dariusz.kbcore
 
 class Greeting {
     private val platform: Platform = getPlatform()
