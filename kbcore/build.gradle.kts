@@ -121,3 +121,7 @@ mapOf(
     project.extra.set(it.key, it.value)
 }
 
+tasks.withType<PublishToMavenRepository> {
+    dependsOn(tasks.assemble)
+}
+
