@@ -84,8 +84,8 @@ afterEvaluate {
                 name = "GitHubPackages"
                 url = uri("https://maven.pkg.github.com/dariuszszlag/KBMultiplatform")
                 credentials {
-                    username = System.getenv("git_user")
-                    password = System.getenv("git_user")
+                    username = System.getenv("GIT_USER")
+                    password = System.getenv("GIT_TOKEN")
                 }
             }
         }
@@ -95,8 +95,8 @@ afterEvaluate {
 mapOf(
     Pair("group_id", "com.dariusz"),
     Pair("artifact_id", "kbembed"),
-    Pair("version_code", System.getenv("versionCode")),
-    Pair("version_name", System.getenv("versionName")),
+    Pair("version_code", System.getenv("VERSION_CODE")),
+    Pair("version_name", System.getenv("VERSION_NAME")),
     Pair("library_name", "KBEmbed"),
     Pair("library_description", "Embed version of KB")
 ).entries.forEach {
