@@ -1,19 +1,15 @@
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    `maven-publish`
 }
 
 android {
-    namespace = "com.dariusz.kbapp"
+    namespace = "com.dariusz.kbembed"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.dariusz.kbapp"
         minSdk = 26
-        targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
@@ -42,6 +38,14 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
     }
+    publishing {
+        multipleVariants {
+            withSourcesJar()
+            withJavadocJar()
+            allVariants()
+        }
+    }
+
 }
 
 dependencies {
@@ -62,4 +66,39 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("maven") {
+                description = project.extra["library_description"].toString()
+                groupId = project.extra["group_id"].toString()
+                artifactId = project.extra["artifact_id"].toString()
+                version = project.extra["version_name"].toString()
+                artifact("$buildDir/outputs/aar/${artifactId}-release.aar")
+            }
+        }
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/dariuszszlag/KBMultiplatform")
+                credentials {
+                    username = System.getenv("git_user")
+                    password = System.getenv("git_user")
+                }
+            }
+        }
+    }
+}
+
+mapOf(
+    Pair("group_id", "com.dariusz"),
+    Pair("artifact_id", "kbembed"),
+    Pair("version_code", System.getenv("versionCode")),
+    Pair("version_name", System.getenv("versionName")),
+    Pair("library_name", "KBEmbed"),
+    Pair("library_description", "Embed version of KB")
+).entries.forEach {
+    project.extra.set(it.key, it.value)
 }

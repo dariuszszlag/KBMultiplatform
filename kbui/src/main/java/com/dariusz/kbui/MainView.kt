@@ -11,8 +11,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.dariusz.kbmultiapp.Post
-import com.dariusz.kbmultiapp.Summary
+import com.dariusz.kbcore.Post
+import com.dariusz.kbcore.Summary
 
 @Composable
 fun MainView(mainState: MainState) {

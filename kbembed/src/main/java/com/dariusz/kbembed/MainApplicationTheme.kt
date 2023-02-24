@@ -1,4 +1,4 @@
-package com.dariusz.kbapp
+package com.dariusz.kbembed
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape

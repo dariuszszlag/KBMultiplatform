@@ -1,6 +1,7 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    `maven-publish`
 }
 
 kotlin {
@@ -57,7 +58,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.dariusz.kbmultiapp"
+    namespace = "com.dariusz.kbcore"
     compileSdk = 33
     defaultConfig {
         minSdk = 26
@@ -66,4 +67,57 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+    }
+    publishing {
+        multipleVariants {
+            withSourcesJar()
+            withJavadocJar()
+            allVariants()
+        }
+    }
 }
+
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("maven") {
+                description = project.extra["library_description"].toString()
+                groupId = project.extra["group_id"].toString()
+                artifactId = project.extra["artifact_id"].toString()
+                version = project.extra["version_name"].toString()
+                artifact("$buildDir/outputs/aar/${artifactId}-release.aar")
+            }
+        }
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/dariuszszlag/KBMultiplatform")
+                credentials {
+                    username = System.getenv("git_user")
+                    password = System.getenv("git_user")
+                }
+            }
+        }
+    }
+}
+
+
+mapOf(
+    Pair("group_id", "com.dariusz"),
+    Pair("artifact_id", "kbcore"),
+    Pair("version_code", System.getenv("versionCode")),
+    Pair("version_name", System.getenv("versionName")),
+    Pair("library_name", "KBCore"),
+    Pair("library_description", "Core of KB")
+).entries.forEach {
+    project.extra.set(it.key, it.value)
+}
+

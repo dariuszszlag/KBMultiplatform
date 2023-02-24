@@ -1,5 +1,7 @@
-package com.dariusz.kbmultiapp
+package com.dariusz.kbcore
 
+import com.dariusz.kbcore.KBCore
+import com.dariusz.kbcore.KBCoreBuilder
 import kotlinx.coroutines.CoroutineScope
 
 class KBCoreIosBuilder : KBCoreBuilder {

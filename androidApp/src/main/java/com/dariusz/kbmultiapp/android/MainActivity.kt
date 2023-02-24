@@ -13,9 +13,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.dariusz.kbmultiapp.Post
-import com.dariusz.kbmultiapp.Summary
-import com.dariusz.kbmultiapp.getKBCoreBuilder
+import com.dariusz.kbcore.Post
+import com.dariusz.kbcore.Summary
+import com.dariusz.kbcore.getKBCoreBuilder
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 

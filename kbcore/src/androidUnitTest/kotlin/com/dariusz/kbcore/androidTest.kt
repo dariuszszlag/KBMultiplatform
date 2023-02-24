@@ -1,5 +1,6 @@
-package com.dariusz.kbmultiapp
+package com.dariusz.kbcore
 
+import com.dariusz.kbcore.Greeting
 import org.junit.Assert.assertTrue
 import org.junit.Test
 

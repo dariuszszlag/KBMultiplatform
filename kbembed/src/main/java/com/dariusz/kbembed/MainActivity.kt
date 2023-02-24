@@ -1,4 +1,4 @@
-package com.dariusz.kbapp
+package com.dariusz.kbembed
 
 import android.content.Context
 import android.content.Intent
@@ -13,8 +13,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import com.dariusz.kbmultiapp.KBCore
-import com.dariusz.kbmultiapp.getKBCoreBuilder
+import com.dariusz.kbcore.KBCore
+import com.dariusz.kbcore.getKBCoreBuilder
 import com.dariusz.kbui.MainState
 import com.dariusz.kbui.MainView
 import com.dariusz.kbui.UserData
@@ -24,7 +24,8 @@ import kotlinx.coroutines.flow.combine
 
 class MainActivity : ComponentActivity() {
 
-    private val kbCore: KBCore = getKBCoreBuilder().setCoroutineScope(CoroutineScope(Dispatchers.Main.immediate)).build()
+    private val kbCore: KBCore =
+        getKBCoreBuilder().setCoroutineScope(CoroutineScope(Dispatchers.Main.immediate)).build()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

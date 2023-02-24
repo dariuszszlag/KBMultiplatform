@@ -1,5 +1,6 @@
-package com.dariusz.kbmultiapp
+package com.dariusz.kbcore
 
+import com.dariusz.kbcore.Platform
 import platform.UIKit.UIDevice
 
 class IOSPlatform : Platform {
