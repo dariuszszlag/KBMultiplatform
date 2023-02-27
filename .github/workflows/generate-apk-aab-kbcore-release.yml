@@ -1,0 +1,79 @@
+name: Generate aab for kbcore
+
+env:
+  kb_core_module: kbcore  
+  
+on:
+  push:
+    tags:
+      - 'v*.*.*-CORE'	
+    
+  workflow_dispatch:    
+  
+jobs:
+  publish:
+    name: Release KBCore
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+        
+      - name: Set tag version as env variable
+        run: echo "VERSION_NAME=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
+      - name: Set version code as env variable
+        run: |
+          $count = git log --oneline | wc -l
+          echo "VERSION_CODE=$count" >> $GITHUB_ENV
+
+      - name: Set Up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: 11
+
+      - name: Cache Gradle and wrapper
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
+
+      - name: Build gradle project
+        run: ./gradlew build
+
+      - name: Build AAR for KBCore
+        run: ./gradlew :kbcore:assemble
+
+      - name: Publish to GitHub Package Registry 🚀
+        run: ./gradlew :kbcore:publish
+        env:
+          GPR_USER: ${{ github.actor }}
+          GPR_KEY: ${{ secrets.GITHUB_TOKEN }}
+	
+      - name: Create Release ✅
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}-CORE
+          draft: true
+          prerelease: false
+	
+      - name: Upload Simple Library AAR 🗳
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: kbcore/build/outputs/aar/kbcore-release.aar
+          asset_name: kbcore.aar
+          asset_content_type: application/aar
