@@ -40,18 +40,18 @@ jobs:
           GIT_USER: ${{ github.actor }}
           GIT_TOKEN: ${{ secrets.SECRET_GITHUB_CODE }}
 
-      - name: Create Release ✅
+      - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.SECRET_GITHUB_CODE }}
         with:
           tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}-CORE
           draft: true
           prerelease: false
 
-      - name: Upload Simple Library AAR 🗳
+      - name: Upload AAR
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.SECRET_GITHUB_CODE }}
