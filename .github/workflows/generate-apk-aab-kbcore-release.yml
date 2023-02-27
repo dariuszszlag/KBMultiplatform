@@ -35,7 +35,7 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Publish to GitHub Package Registry 🚀
-        run: ./gradlew :kbcore:publish
+        run: ./gradlew clean :kbcore:publish
         env:
           GIT_USER: ${{ github.actor }}
           GIT_TOKEN: ${{ secrets.SECRET_GITHUB_CODE }}
