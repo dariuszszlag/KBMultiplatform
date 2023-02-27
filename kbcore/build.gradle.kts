@@ -1,11 +1,12 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    `maven-publish`
+    id("maven-publish")
 }
 
 kotlin {
     android {
+        publishLibraryVariants("release")
         compilations.all {
             kotlinOptions {
                 jvmTarget = "11"
