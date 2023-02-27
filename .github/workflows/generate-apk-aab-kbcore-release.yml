@@ -1,15 +1,15 @@
 name: Generate aab for kbcore
 
 env:
-  kb_core_module: kbcore  
-  
+  kb_core_module: kbcore
+
 on:
   push:
     tags:
-      - 'v*.*.*-CORE'	
-    
-  workflow_dispatch:    
-  
+      - "v*.*.*-CORE"
+
+  workflow_dispatch:
+
 jobs:
   publish:
     name: Release KBCore
@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-        
+
       - name: Set tag version as env variable
         run: echo "VERSION_NAME=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
@@ -56,7 +56,7 @@ jobs:
         env:
           GPR_USER: ${{ github.actor }}
           GPR_KEY: ${{ secrets.GITHUB_TOKEN }}
-	
+
       - name: Create Release ✅
         id: create_release
         uses: actions/create-release@v1
@@ -67,7 +67,7 @@ jobs:
           release_name: ${{ github.ref }}-CORE
           draft: true
           prerelease: false
-	
+
       - name: Upload Simple Library AAR 🗳
         uses: actions/upload-release-asset@v1
         env:
