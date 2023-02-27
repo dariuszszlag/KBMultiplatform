@@ -73,7 +73,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: "https://maven.pkg.github.com/dariuszszlag/KBMultiplatform/KBMultiApp/kbcore/release/kbcore-release.aar"
           asset_path: kbcore/build/outputs/aar/kbcore-release.aar
           asset_name: kbcore.aar
           asset_content_type: application/aar
