@@ -26,11 +26,12 @@ jobs:
         run: |
           $count = git log --oneline | wc -l
           echo "VERSION_CODE=$count" >> $GITHUB_ENV
-
       - name: Set Up JDK
         uses: actions/setup-java@v3
         with:
-          java-version: 11
+          java-version: "11"
+          distribution: "temurin"
+          cache: gradle
 
       - name: Cache Gradle and wrapper
         uses: actions/cache@v3
@@ -41,7 +42,6 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
 
