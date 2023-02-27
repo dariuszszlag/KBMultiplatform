@@ -28,8 +28,8 @@ jobs:
       - name: Set Up JDK
         uses: actions/setup-java@v3
         with:
-          java-version: "11"
-          distribution: "temurin"
+          java-version: 11
+          distribution: temurin
 
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
@@ -47,7 +47,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.SECRET_GITHUB_CODE }}
         with:
           tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}-CORE
+          release_name: ${{ github.ref }}
           draft: true
           prerelease: false
 
@@ -58,5 +58,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: kbcore/build/outputs/aar/kbcore-release.aar
-          asset_name: kbcore.aar
+          asset_name: kbcore-release.aar
           asset_content_type: application/aar
