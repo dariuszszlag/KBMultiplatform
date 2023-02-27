@@ -89,7 +89,7 @@ android {
 afterEvaluate {
     publishing {
         publications {
-            create<MavenPublication>("maven") {
+            register<MavenPublication>("gpr") {
                 description = project.extra["library_description"].toString()
                 groupId = project.extra["group_id"].toString()
                 artifactId = project.extra["artifact_id"].toString()
