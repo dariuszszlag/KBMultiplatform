@@ -23,9 +23,8 @@ jobs:
         run: echo "VERSION_NAME=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
       - name: Set version code as env variable
-        run: |
-          $count = git log --oneline | wc -l
-          echo "VERSION_CODE=$count" >> $GITHUB_ENV
+        run: echo "VERSION_NAME=$(git log --oneline | wc -l)"
+          
       - name: Set Up JDK
         uses: actions/setup-java@v3
         with:
@@ -42,6 +41,7 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
+            
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
 
@@ -54,8 +54,8 @@ jobs:
       - name: Publish to GitHub Package Registry 🚀
         run: ./gradlew :kbcore:publish
         env:
-          GPR_USER: ${{ github.actor }}
-          GPR_KEY: ${{ secrets.GITHUB_TOKEN }}
+          GIT_USER: ${{ github.actor }}
+          GIT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Release ✅
         id: create_release
