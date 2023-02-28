@@ -22,9 +22,6 @@ jobs:
       - name: Set tag version as env variable
         run: echo "VERSION_NAME=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
-      - name: Set version code as env variable
-        run: echo "VERSION_CODE=$(git log --oneline | wc -l)" >> $GITHUB_ENV
-          
       - name: Set Up JDK
         uses: actions/setup-java@v3
         with:
