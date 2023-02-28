@@ -1,4 +1,4 @@
-name: Generate kbcore library
+name: Create KBCore release
 
 on:
   push:
