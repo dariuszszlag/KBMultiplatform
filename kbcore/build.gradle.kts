@@ -7,6 +7,7 @@ plugins {
 kotlin {
     android {
         publishLibraryVariants("release")
+        publishLibraryVariantsGroupedByFlavor = true
         compilations.all {
             kotlinOptions {
                 jvmTarget = "11"
