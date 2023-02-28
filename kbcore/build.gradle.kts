@@ -4,8 +4,8 @@ plugins {
     id("maven-publish")
 }
 
-group = "com.dariusz.kbcore"
-version = System.getenv("VERSION_NAME").toString()
+group = "com.dariusz"
+version = System.getenv("VERSION_NAME")
 
 val GIT_USER: String by project
 val GIT_TOKEN: String by project
