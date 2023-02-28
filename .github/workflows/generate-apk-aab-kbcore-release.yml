@@ -20,7 +20,7 @@ jobs:
         run: chmod +x ./generate-version.bash
 
       - name: Set tag version as env variable
-        run: echo "VERSION_NAME=${./generate-version.bash}" >> $GITHUB_ENV
+        run: ./generate-version.bash
 
       - name: Set Up JDK
         uses: actions/setup-java@v3
