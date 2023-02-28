@@ -35,28 +35,4 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Publish to GitHub Package Registry 🚀
-        run: ./gradlew clean :kbcore:publish
-        env:
-          GIT_USER: ${{ github.actor }}
-          GIT_TOKEN: ${{ secrets.SECRET_GITHUB_CODE }}
-
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.SECRET_GITHUB_CODE }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}-CORE
-          draft: true
-          prerelease: false
-
-      - name: Upload AAR
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.SECRET_GITHUB_CODE }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: kbcore/build/outputs/aar/kbcore-release.aar
-          asset_name: kbcore-release.aar
-          asset_content_type: application/aar
+        run: ./gradlew clean :kbcore:publish -PGIT_USER=${{ github.actor }} -PGIT_TOKEN=${{ secrets.SECRET_GITHUB_CODE }}
