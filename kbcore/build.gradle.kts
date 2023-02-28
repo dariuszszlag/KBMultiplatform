@@ -4,6 +4,9 @@ plugins {
     id("maven-publish")
 }
 
+val GIT_USER: String by project
+val GIT_TOKEN: String by project
+
 kotlin {
     android {
         publishLibraryVariants("release")
@@ -103,8 +106,8 @@ afterEvaluate {
                 name = "GitHubPackages"
                 url = uri("https://maven.pkg.github.com/dariuszszlag/KBMultiplatform")
                 credentials {
-                    username = System.getenv("GIT_USER")
-                    password = System.getenv("GIT_TOKEN")
+                    username = GIT_USER
+                    password = GIT_TOKEN
                 }
             }
         }
