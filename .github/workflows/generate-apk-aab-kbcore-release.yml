@@ -17,7 +17,7 @@ jobs:
           fetch-depth: 0
 
       - name: Set tag version as env variable
-        run: echo "VERSION_NAME=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+        run: [[ "v1.2.34-CORE" =~ ([0-9]+(\.[0-9]+)+) ]] && echo "VERSION_NAME=${BASH_REMATCH[1]}" >> $GITHUB_ENV"
 
       - name: Set Up JDK
         uses: actions/setup-java@v3
