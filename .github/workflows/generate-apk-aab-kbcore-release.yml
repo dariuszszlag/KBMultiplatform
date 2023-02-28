@@ -16,8 +16,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Change wrapper permissions
+        run: chmod +x ./generate-version.bash
+
       - name: Set tag version as env variable
-        run: [[ "${GITHUB_REF#refs/*/}" =~ ([0-9]+(\.[0-9]+)+) ]] && echo "VERSION_NAME=${BASH_REMATCH[1]}" >> $GITHUB_ENV
+        run: echo "VERSION_NAME=${./generate-version.bash}" >> $GITHUB_ENV
 
       - name: Set Up JDK
         uses: actions/setup-java@v3
