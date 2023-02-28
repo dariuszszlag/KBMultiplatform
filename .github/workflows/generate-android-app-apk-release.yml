@@ -38,6 +38,6 @@ jobs:
         run: ./gradlew :androidApp:assembleRelease
 
       - name: Create Github Release
-        run: hub release create -a ./androidApp/build/outputs/apk/release/androidApp-release-unsigned.apk -m "${GITHUB_REF##*/}" ${env.VERSION_NAME}
+        run: hub release create -a ./androidApp/build/outputs/apk/release/androidApp-release-unsigned.apk -m "${GITHUB_REF##*/}" $VERSION_NAME
         env:
           GITHUB_TOKEN: ${{ secrets.SECRET_GITHUB_CODE }}
