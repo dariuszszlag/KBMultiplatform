@@ -93,7 +93,6 @@ android {
     }
 }
 
-
 publishing {
     repositories {
         maven {
@@ -105,18 +104,6 @@ publishing {
             }
         }
     }
-}
-
-
-mapOf(
-    Pair("group_id", "com.dariusz"),
-    Pair("artifact_id", "kbcore"),
-    Pair("version_code", System.getenv("VERSION_CODE")),
-    Pair("version_name", ),
-    Pair("library_name", "KBCore"),
-    Pair("library_description", "Core of KB")
-).entries.forEach {
-    project.extra.set(it.key, it.value)
 }
 
 tasks.withType<PublishToMavenRepository> {
