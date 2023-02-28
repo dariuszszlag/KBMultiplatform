@@ -7,8 +7,8 @@ plugins {
 group = "com.dariusz"
 version = System.getenv("VERSION_NAME")
 
-val GIT_USER: String by project
-val GIT_TOKEN: String by project
+val GIT_USER: String? by project
+val GIT_TOKEN: String? by project
 
 kotlin {
     android {
