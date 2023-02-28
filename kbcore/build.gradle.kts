@@ -4,6 +4,9 @@ plugins {
     id("maven-publish")
 }
 
+group = "com.dariusz.kbcore"
+version = System.getenv("VERSION_NAME").toString()
+
 val GIT_USER: String by project
 val GIT_TOKEN: String by project
 
@@ -90,35 +93,26 @@ android {
     }
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            register<MavenPublication>("gpr") {
-                description = project.extra["library_description"].toString()
-                groupId = project.extra["group_id"].toString()
-                artifactId = project.extra["artifact_id"].toString()
-                version = project.extra["version_name"].toString()
-                artifact("$buildDir/outputs/aar/${artifactId}-release.aar")
-            }
-        }
-        repositories {
-            maven {
-                name = "GitHubPackages"
-                url = uri("https://maven.pkg.github.com/dariuszszlag/KBMultiplatform")
-                credentials {
-                    username = GIT_USER
-                    password = GIT_TOKEN
-                }
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/dariuszszlag/KBMultiplatform")
+            credentials {
+                username = GIT_USER
+                password = GIT_TOKEN
             }
         }
     }
 }
 
+
 mapOf(
     Pair("group_id", "com.dariusz"),
     Pair("artifact_id", "kbcore"),
     Pair("version_code", System.getenv("VERSION_CODE")),
-    Pair("version_name", System.getenv("VERSION_NAME")),
+    Pair("version_name", ),
     Pair("library_name", "KBCore"),
     Pair("library_description", "Core of KB")
 ).entries.forEach {
