@@ -1,24 +1,41 @@
 package com.dariusz.kbcore
 
-import com.dariusz.kbcore.KBCore
-import com.dariusz.kbcore.KBCoreBuilder
-import com.dariusz.kbcore.KBCoreImpl
+import android.util.Log
+import com.dariusz.kbcore.MockResponsesHelper.interceptWithMockedResponses
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.mock.MockEngine
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.serialization.kotlinx.json.json
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.serialization.json.Json
 
 class KBCoreAndroidBuilder : KBCoreBuilder {
 
     private lateinit var coroutineScopeImpl: CoroutineScope
 
-    override fun setCoroutineScope(coroutineScope: CoroutineScope): KBCoreAndroidBuilder {
-        coroutineScopeImpl = coroutineScope
-        return this
-    }
+    private lateinit var httpClientImpl: HttpClient
 
     override fun build(): KBCore {
-        return if (this::coroutineScopeImpl.isInitialized)
-            KBCoreImpl(coroutineScopeImpl)
-        else
-            throw IllegalStateException("No coroutineScope provided")
+        coroutineScopeImpl =
+            CoroutineScope(IO + SupervisorJob() + CoroutineExceptionHandler { _, throwable ->
+                Log.e(
+                    "KBCore error: ",
+                    "$throwable"
+                )
+            })
+        httpClientImpl = HttpClient(MockEngine) {
+            interceptWithMockedResponses()
+            install(ContentNegotiation) {
+                json(Json {
+                    prettyPrint = true
+                    isLenient = true
+                })
+            }
+        }
+        return KBCoreImpl(httpClientImpl, coroutineScopeImpl)
     }
 
 }
