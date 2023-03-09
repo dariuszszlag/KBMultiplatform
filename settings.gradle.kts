@@ -25,5 +25,4 @@ dependencyResolutionManagement {
 rootProject.name = "KBMultiApp"
 include(":androidApp")
 include(":kbcore")
-include(":kbui")
 include(":kbembed")

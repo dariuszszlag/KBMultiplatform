@@ -1,5 +1,15 @@
 package com.dariusz.kbcore
 
+import com.dariusz.kbcore.feature.balance.Balance
+import com.dariusz.kbcore.feature.balance.BalanceService
+import com.dariusz.kbcore.feature.draft.Draft
+import com.dariusz.kbcore.feature.draft.DraftService
+import com.dariusz.kbcore.feature.post.Post
+import com.dariusz.kbcore.feature.post.PostService
+import com.dariusz.kbcore.feature.user.User
+import com.dariusz.kbcore.feature.user.UserService
+import com.dariusz.kbcore.session.SessionManager.checkUserAndReturnId
+import io.ktor.client.HttpClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -7,39 +17,46 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class KBCoreImpl(
+    private val client: HttpClient,
     private val coroutineScope: CoroutineScope
 ) : KBCore {
 
-    private val _userBalanceFlow = MutableStateFlow(0)
-    private val _summaryFlow = MutableStateFlow(Summary(0, ""))
-    private val _postsFlow = MutableStateFlow(listOf<Post>())
+    private val userId = MutableStateFlow(0)
 
-    override val userBalanceFlow: Flow<Int> = _userBalanceFlow.asStateFlow()
-    override val summaryFlow: Flow<Summary> = _summaryFlow.asStateFlow()
-    override val postsFlow: Flow<List<Post>> = _postsFlow.asStateFlow()
+    private val balanceService = BalanceService(client)
+    private val draftService = DraftService(client)
+    private val postService = PostService(client)
+    private val userService = UserService(client)
 
-    override fun getPosts(userId: Int) = coroutineScope.launch {
-        _postsFlow.value = listOf(listOfPosts.find { it.userId == userId } ?: Post(3, "Empty"))
+    private val _userBalanceFlow = MutableStateFlow(Balance(0, 0, "$"))
+    private val _userDraftsFlow = MutableStateFlow(listOf<Draft>())
+    private val _userPostsFlow = MutableStateFlow(listOf<Post>())
+    private val _userDataFlow = MutableStateFlow(User(0, "No such user"))
+
+    override val userBalanceFlow: Flow<Balance> = _userBalanceFlow.asStateFlow()
+    override val userDraftsFlow: Flow<List<Draft>> = _userDraftsFlow.asStateFlow()
+    override val userPostsFlow: Flow<List<Post>> = _userPostsFlow.asStateFlow()
+    override val userDataFlow: Flow<User> = _userDataFlow.asStateFlow()
+
+    override fun getDataForUser(userPassword: String) = coroutineScope.launch {
+        userId.value = checkUserAndReturnId(userPassword)
+        _userBalanceFlow.value =
+            balanceService.getBalances().balanceList.find { it.userId == userId.value }
+                ?: Balance(0, 0, "$")
+        _userDraftsFlow.value =
+            draftService.getDrafts().listOfDrafts.filter { it.userId == userId.value }
+        _userPostsFlow.value =
+            postService.getPosts().listOfPosts.filter { it.userId == userId.value }
+        _userDataFlow.value =
+            userService.getUsers().users.find { it.id == userId.value }
+                ?: User(0, "No such user")
     }
 
-    override fun getSummary(userId: Int) = coroutineScope.launch {
-        _summaryFlow.value = listOfSummary.find { it.userId == userId } ?: Summary(3, "No summary")
+    override fun logout() {
+        userId.value = 0
+        _userBalanceFlow.value = Balance(0, 0, "$")
+        _userDraftsFlow.value = listOf<Draft>()
+        _userPostsFlow.value = listOf<Post>()
+        _userDataFlow.value = User(0, "No such user")
     }
-
-    override fun getUserBalance(userId: Int) = coroutineScope.launch {
-        _userBalanceFlow.value = listOfBalance.find { it.userId == userId }?.balance ?: 0
-    }
-
-    private val listOfPosts = listOf(Post(1, "First post"), Post(2, "Second post"))
-
-    private val listOfSummary = listOf(Summary(1, "First summary"), Summary(2, "Second summary"))
-
-    private val listOfBalance = listOf(Balance(1, 1234), Balance(2, 5678))
-
 }
-
-data class Post(val userId: Int, val post: String)
-
-data class Summary(val userId: Int, val summary: String)
-
-data class Balance(var userId: Int, val balance: Int)

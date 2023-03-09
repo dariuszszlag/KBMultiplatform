@@ -1,9 +1,9 @@
 package com.dariusz.kbembed
 
-import android.content.Context
+import androidx.activity.ComponentActivity
 
 interface KBEmbed {
 
-    fun openKB(context: Context)
+    fun openKB(activity: ComponentActivity)
 
 }

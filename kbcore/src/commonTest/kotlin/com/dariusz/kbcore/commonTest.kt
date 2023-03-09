@@ -1,6 +1,5 @@
 package com.dariusz.kbcore
 
-import com.dariusz.kbcore.Greeting
 import kotlin.test.Test
 import kotlin.test.assertTrue
 

@@ -1,20 +1,19 @@
 package com.dariusz.kbcore
 
+import com.dariusz.kbcore.feature.balance.Balance
+import com.dariusz.kbcore.feature.draft.Draft
+import com.dariusz.kbcore.feature.post.Post
+import com.dariusz.kbcore.feature.user.User
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 
 interface KBCore {
 
-    val userBalanceFlow: Flow<Int>
+    val userBalanceFlow: Flow<Balance>
+    val userDraftsFlow: Flow<List<Draft>>
+    val userPostsFlow: Flow<List<Post>>
+    val userDataFlow: Flow<User>
 
-    val summaryFlow: Flow<Summary>
-
-    val postsFlow: Flow<List<Post>>
-
-    fun getPosts(userId: Int): Job
-
-    fun getSummary(userId: Int): Job
-
-    fun getUserBalance(userId: Int): Job
-
+    fun getDataForUser(userPassword: String): Job
+    fun logout()
 }
