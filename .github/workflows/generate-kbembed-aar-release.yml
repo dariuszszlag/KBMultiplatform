@@ -22,6 +22,9 @@ jobs:
       - name: Set tag version as env variable
         run: ./generate-version.bash
 
+      - name: Set access token as env variable
+        run: echo "ACCESS_TOKEN=${{ secrets.SECRET_GITHUB_CODE_ACCESS }}" >> $GITHUB_ENV
+
       - name: Set Up JDK
         uses: actions/setup-java@v3
         with:
