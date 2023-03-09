@@ -3,7 +3,7 @@ name: Create KBSuite
 on:
   push:
     tags:
-      - "v*.*.*"
+      - "v*.*.*-ALL"
 
   workflow_dispatch:
 
