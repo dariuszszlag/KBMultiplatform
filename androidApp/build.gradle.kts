@@ -34,7 +34,7 @@ android {
 }
 
 dependencies {
-    implementation("com.dariusz:kbembed:0.0.35")
+    compileOnly("com.dariusz:kbembed:0.0.39")
     implementation(platform("androidx.compose:compose-bom:2023.01.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-tooling")
