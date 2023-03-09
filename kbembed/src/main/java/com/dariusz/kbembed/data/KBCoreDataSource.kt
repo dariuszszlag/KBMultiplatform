@@ -1,9 +1,10 @@
 package com.dariusz.kbembed.data
 
-import com.dariusz.kbcore.getKBCoreBuilder
+import com.dariusz.kbcore.KBCoreBuilder
+import kotlinx.coroutines.Dispatchers
 
 object KBCoreDataSource {
 
-    val get = getKBCoreBuilder().build()
+    val get = KBCoreBuilder.coroutineDispatcher(Dispatchers.IO).build()
 
 }
