@@ -9,7 +9,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.dariusz.kbcore.KBCore
-import com.dariusz.kbembed.data.KBCoreDataSource
 import com.dariusz.kbembed.ui.screens.drafts.DraftsScreen
 import com.dariusz.kbembed.ui.screens.drafts.DraftsScreenViewModel
 import com.dariusz.kbembed.ui.screens.home.HomeScreen
