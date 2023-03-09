@@ -1,15 +1,15 @@
-name: Create android app release
+name: Create KBSuite
 
 on:
   push:
     tags:
-      - "v*.*.*-APP"
+      - "v*.*.*-ALL"
 
   workflow_dispatch:
 
 jobs:
   publish:
-    name: Release android app
+    name: Release suite
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -37,10 +37,16 @@ jobs:
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
 
+      - name: Publish KBCore to GitHub Package Registry
+        run: ./gradlew :kbcore:publish -PGIT_USER=${{ github.actor }} -PGIT_TOKEN=${{ secrets.SECRET_GITHUB_CODE }}
+
+      - name: Publish KBEmbed to GitHub Package Registry
+        run: ./gradlew :kbembed:publish -PGIT_USER=${{ github.actor }} -PGIT_TOKEN=${{ secrets.SECRET_GITHUB_CODE }}
+
       - name: Build release APK
         run: ./gradlew :androidApp:assembleRelease
 
-      - name: Create Github Release
+      - name: Create release for Android APP on Github
         run: hub release create -a ./androidApp/build/outputs/apk/release/androidApp-release-unsigned.apk -m "${GITHUB_REF##*/}" $VERSION_NAME
         env:
           GITHUB_TOKEN: ${{ secrets.SECRET_GITHUB_CODE }}

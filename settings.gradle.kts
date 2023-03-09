@@ -1,21 +1,27 @@
 pluginManagement {
     repositories {
-        google()
-        gradlePluginPortal()
-        mavenCentral()
         maven {
-            name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/dariuszszlag/KBMultiplatform")
             credentials {
                 username = "dariuszszlag"
-                password = "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"
+                password = System.getenv("ACCESS_TOKEN")
             }
         }
+        google()
+        gradlePluginPortal()
+        mavenCentral()
     }
 }
 
 dependencyResolutionManagement {
     repositories {
+        maven {
+            url = uri("https://maven.pkg.github.com/dariuszszlag/KBMultiplatform")
+            credentials {
+                username = "dariuszszlag"
+                password = System.getenv("ACCESS_TOKEN")
+            }
+        }
         google()
         gradlePluginPortal()
         mavenCentral()

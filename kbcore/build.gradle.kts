@@ -37,6 +37,7 @@ kotlin {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
                 implementation("io.ktor:ktor-client-core:2.2.3")
+                implementation("io.ktor:ktor-client-mock:2.2.3")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:2.2.3")
                 implementation("io.ktor:ktor-client-content-negotiation:2.2.3")
             }
@@ -50,9 +51,6 @@ kotlin {
             dependsOn(commonMain)
             dependencies {
                 implementation("io.ktor:ktor-client-android:2.2.3")
-                implementation("io.ktor:ktor-client-mock:2.2.3")
-                implementation("io.ktor:ktor-serialization-kotlinx-json:2.2.3")
-                implementation("io.ktor:ktor-client-logging:2.2.3")
             }
         }
         val androidUnitTest by getting
@@ -123,5 +121,9 @@ publishing {
 
 tasks.withType<PublishToMavenRepository> {
     dependsOn(tasks.assemble)
+}
+
+configurations {
+    kotlinCompilerClasspath
 }
 

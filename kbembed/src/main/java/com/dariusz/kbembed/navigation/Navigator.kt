@@ -8,7 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.dariusz.kbembed.data.KBCoreDataSource
+import com.dariusz.kbcore.KBCore
 import com.dariusz.kbembed.ui.screens.drafts.DraftsScreen
 import com.dariusz.kbembed.ui.screens.drafts.DraftsScreenViewModel
 import com.dariusz.kbembed.ui.screens.home.HomeScreen
@@ -20,9 +20,8 @@ import com.dariusz.kbembed.ui.screens.posts.PostsScreenViewModel
 import com.dariusz.kbembed.utils.ManualInjection.composeViewModel
 
 @Composable
-fun Navigator() {
+fun Navigator(dataSource: KBCore) {
     val navController = rememberNavController()
-    val dataSource = KBCoreDataSource.get
     val homeScreenViewModel = composeViewModel {
         HomeScreenViewModel(dataSource)
     }

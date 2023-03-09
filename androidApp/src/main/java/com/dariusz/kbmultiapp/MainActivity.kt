@@ -1,18 +1,21 @@
-package com.dariusz.kbmultiapp.android
+package com.dariusz.kbmultiapp
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import com.dariusz.kbcore.KBCoreBuilder
 import com.dariusz.kbembed.KBEmbed
-import com.dariusz.kbembed.KBEmbedBuilder
+import kotlinx.coroutines.Dispatchers
 
 class MainActivity : ComponentActivity() {
-
-    private val kbEmbed: KBEmbed = KBEmbedBuilder()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        kbEmbed.openKB(this)
+        val kbCore = KBCoreBuilder.coroutineDispatcher(Dispatchers.IO).build()
+
+        KBEmbed.apply {
+            openKB(kbCore)
+        }
 
     }
 }
