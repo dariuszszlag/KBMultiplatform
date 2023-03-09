@@ -1,43 +1,13 @@
 package com.dariusz.kbcore
 
-import com.dariusz.kbcore.MockResponsesHelper.interceptWithMockedResponses
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.mock.MockEngine
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.serialization.json.Json
-import kotlin.native.concurrent.ThreadLocal
 
-@ThreadLocal
-object KBCoreBuilder {
+interface KBCoreBuilder {
 
-    private lateinit var coroutineScope: CoroutineScope
+    fun coroutineDispatcher(coroutineDispatcher: CoroutineDispatcher): KBCoreBuilder
 
-    private lateinit var coroutineDispatcherImpl: CoroutineDispatcher
-
-    private lateinit var httpClient: HttpClient
-
-    fun coroutineDispatcher(coroutineDispatcher: CoroutineDispatcher): KBCoreBuilder {
-        coroutineDispatcherImpl = coroutineDispatcher
-        return this
-    }
-
-    fun build(): KBCore {
-        coroutineScope = CoroutineScope(coroutineDispatcherImpl + SupervisorJob() + CoroutineExceptionHandler { _, _ -> })
-        httpClient = HttpClient(MockEngine) {
-            interceptWithMockedResponses()
-            install(ContentNegotiation) {
-                json(Json {
-                    prettyPrint = true
-                    isLenient = true
-                })
-            }
-        }
-        return if (::coroutineDispatcherImpl.isInitialized) KBCoreImpl(httpClient, coroutineScope) else throw IllegalArgumentException("No coroutine dispatcher provided")
-    }
+    fun build(): KBCore
 
 }
+
+expect fun kbCoreBuilder(): KBCoreBuilder
