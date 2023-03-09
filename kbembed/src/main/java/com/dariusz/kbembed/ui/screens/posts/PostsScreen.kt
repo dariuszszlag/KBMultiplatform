@@ -10,11 +10,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.dariusz.kbcore.feature.post.Post
 import com.dariusz.kbembed.ui.components.PostOrDraftView
-import com.dariusz.kbembed.utils.ViewStateUtils.show
+import com.dariusz.kbembed.utils.Result
+import com.dariusz.kbembed.utils.Result.Companion.show
 
 @Composable
 fun PostsScreen(
-    postScreenState: PostsScreenState,
+    postScreenState: Result<List<Post>>,
     onGoBack: () -> Unit
 ) {
 

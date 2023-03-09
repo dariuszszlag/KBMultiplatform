@@ -8,11 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import com.dariusz.kbembed.ui.components.TextInput
-import com.dariusz.kbembed.utils.ViewStateUtils.show
+import com.dariusz.kbembed.utils.Result
+import com.dariusz.kbembed.utils.Result.Companion.show
 
 @Composable
 fun LoginScreen(
-    loginScreenState: LoginScreenState,
+    loginScreenState: Result<Boolean>,
     onAlreadyLoggedIn: () -> Unit,
     onPasswordSubmit: (String) -> Unit
 ) {
@@ -32,7 +33,7 @@ fun LoginScreen(
             }
         }
 
-        LaunchedEffect(loginScreenState.data) {
+        LaunchedEffect(it) {
             if (it) onAlreadyLoggedIn()
         }
     }

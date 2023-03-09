@@ -10,11 +10,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.dariusz.kbcore.feature.draft.Draft
 import com.dariusz.kbembed.ui.components.PostOrDraftView
-import com.dariusz.kbembed.utils.ViewStateUtils.show
+import com.dariusz.kbembed.utils.Result
+import com.dariusz.kbembed.utils.Result.Companion.show
 
 @Composable
 fun DraftsScreen(
-    draftsScreenState: DraftsScreenState,
+    draftsScreenState: Result<List<Draft>>,
     onGoBack: () -> Unit
 ) {
 

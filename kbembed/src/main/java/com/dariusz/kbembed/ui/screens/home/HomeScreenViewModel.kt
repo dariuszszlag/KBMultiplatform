@@ -4,12 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dariusz.kbcore.KBCore
 import com.dariusz.kbembed.utils.Result
-import com.dariusz.kbembed.utils.ViewState
-import com.dariusz.kbembed.utils.ViewStateUtils.asResult
-import com.dariusz.kbembed.utils.ViewStateUtils.onError
+import com.dariusz.kbembed.utils.Result.Companion.asResult
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
 class HomeScreenViewModel(
@@ -32,22 +29,16 @@ class HomeScreenViewModel(
             UserData(userId, balance, postsCount, draftsCount)
         }
     }
-        .asResult()
-        .onError("Error when getting user data")
-        .map { HomeScreenState(it) }
+        .asResult(onErrorMessage = "Error when getting user data")
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(),
-            HomeScreenState()
+            Result.Loading
         )
 
     fun logout() = dataSource.logout()
 
 }
-
-data class HomeScreenState(
-    override val data: Result<UserData> = Result.Loading
-) : ViewState<UserData>
 
 data class UserData(
     val id: Int = 0,

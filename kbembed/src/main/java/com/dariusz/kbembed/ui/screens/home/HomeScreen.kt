@@ -13,11 +13,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.dariusz.kbembed.utils.ViewStateUtils.show
+import com.dariusz.kbembed.utils.Result
+import com.dariusz.kbembed.utils.Result.Companion.show
 
 @Composable
 fun HomeScreen(
-    homeScreenState: HomeScreenState,
+    homeScreenState: Result<UserData>,
     onNotLoggedIn: () -> Unit,
     onNavigatePosts: () -> Unit,
     onNavigateDrafts: () -> Unit,
