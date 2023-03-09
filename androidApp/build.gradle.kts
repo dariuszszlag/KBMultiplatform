@@ -4,10 +4,10 @@ plugins {
 }
 
 android {
-    namespace = "com.dariusz.kbmultiapp.android"
+    namespace = "com.dariusz.kbmultiapp"
     compileSdk = 33
     defaultConfig {
-        applicationId = "com.dariusz.kbmultiapp.android"
+        applicationId = "com.dariusz.kbmultiapp"
         minSdk = 26
         targetSdk = 33
         versionCode = System.getenv("VERSION_CODE")?.toInt() ?: 1
@@ -34,7 +34,8 @@ android {
 }
 
 dependencies {
-    compileOnly("com.dariusz:kbembed:0.0.39")
+    implementation("com.dariusz:kbcore:0.0.38")
+    implementation("com.dariusz:kbembed:0.0.41")
     implementation(platform("androidx.compose:compose-bom:2023.01.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-tooling")
