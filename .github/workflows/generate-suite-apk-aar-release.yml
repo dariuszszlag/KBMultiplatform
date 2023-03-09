@@ -1,0 +1,52 @@
+name: Create KBSuite
+
+on:
+  push:
+    tags:
+      - "v*.*.*-ALL"
+
+  workflow_dispatch:
+
+jobs:
+  publish:
+    name: Release suite
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Change wrapper permissions
+        run: chmod +x ./generate-version.bash
+
+      - name: Set tag version as env variable
+        run: ./generate-version.bash
+
+      - name: Set version code as env variable
+        run: echo "VERSION_CODE=$(git log --oneline | wc -l)" >> $GITHUB_ENV
+
+      - name: Set version code as env variable
+        run: echo "ACCESS_TOKEN=${{ secrets.SECRET_GITHUB_CODE_ACCESS }}" >> $GITHUB_ENV
+
+      - name: Set Up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: temurin
+
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
+
+      - name: Publish KBCore to GitHub Package Registry
+        run: ./gradlew :kbcore:publish -PGIT_USER=${{ github.actor }} -PGIT_TOKEN=${{ secrets.SECRET_GITHUB_CODE }}
+
+      - name: Publish KBEmbed to GitHub Package Registry
+        run: ./gradlew :kbembed:publish -PGIT_USER=${{ github.actor }} -PGIT_TOKEN=${{ secrets.SECRET_GITHUB_CODE }}
+
+      - name: Build release APK
+        run: ./gradlew :androidApp:assembleRelease
+
+      - name: Create release for Android APP on Github
+        run: hub release create -a ./androidApp/build/outputs/apk/release/androidApp-release-unsigned.apk -m "${GITHUB_REF##*/}" $VERSION_NAME
+        env:
+          GITHUB_TOKEN: ${{ secrets.SECRET_GITHUB_CODE }}
