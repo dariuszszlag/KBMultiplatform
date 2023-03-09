@@ -125,3 +125,7 @@ tasks.withType<PublishToMavenRepository> {
     dependsOn(tasks.assemble)
 }
 
+configurations {
+    kotlinCompilerClasspath
+}
+
