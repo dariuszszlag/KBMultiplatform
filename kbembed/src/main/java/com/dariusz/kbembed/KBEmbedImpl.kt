@@ -1,15 +1,14 @@
 package com.dariusz.kbembed
 
 import com.dariusz.kbembed.navigation.Navigator
-import com.dariusz.kbembed.utils.LoginUtils
+import com.dariusz.kbembed.utils.LoginTest
 
 internal class KBEmbedImpl(
-    private val kbEmbedComponents: KBEmbedComponents,
-    private val loginUtils: LoginUtils
+    private val navigator: Navigator,
+    private val loginTest: LoginTest
 ): KBEmbed {
+    override fun getNavigator(): Navigator = navigator
 
-    override fun getNavigator(): Navigator = kbEmbedComponents.navigator
-
-    override fun login(password: String) = loginUtils.loginWithCorrectPassword(password)
+    override fun login(password: String) = loginTest.loginWithCorrectPassword(password)
 
 }

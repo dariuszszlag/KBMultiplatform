@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -26,10 +27,7 @@ fun MainNavHost(kbEmbedComponents: KBEmbedComponents) {
     val draftsScreenViewModel = dataSource.getViewModel(DraftsScreenViewModel::class)
     val postsScreenViewModel = dataSource.getViewModel(PostsScreenViewModel::class)
     val loginScreenViewModel = dataSource.getViewModel(LoginScreenViewModel::class)
-    NavHost(
-        navController = kbEmbedComponents.navController as NavHostController,
-        startDestination = Destination.HOME.route
-    ) {
+    CustomNavHost(navigator) {
         composable(Destination.HOME.route) {
             val homeScreenState by remember(homeScreenViewModel) { homeScreenViewModel.homeScreenState }.collectAsState()
             HomeScreen(
@@ -66,4 +64,13 @@ fun MainNavHost(kbEmbedComponents: KBEmbedComponents) {
             )
         }
     }
+}
+
+@Composable
+private fun CustomNavHost(
+    navigator: Navigator,
+    startDestination: Destination = Destination.HOME,
+    builder: NavGraphBuilder.() -> Unit
+){
+    NavHost(navController = navigator.navController as NavHostController, startDestination = startDestination.route, builder = builder)
 }

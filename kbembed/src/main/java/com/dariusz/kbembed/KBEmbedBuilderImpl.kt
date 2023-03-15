@@ -2,13 +2,14 @@ package com.dariusz.kbembed
 
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.remember
 import androidx.navigation.compose.rememberNavController
 import com.dariusz.kbcore.KBCore
 import com.dariusz.kbembed.navigation.MainNavHost
-import com.dariusz.kbembed.ui.screens.login.LoginScreenViewModel
+import com.dariusz.kbembed.navigation.Navigator
 import com.dariusz.kbembed.ui.theme.MyApplicationTheme
-import com.dariusz.kbembed.utils.LoginUtils
-import com.dariusz.kbembed.utils.ComposeViewModel.getViewModel
+import com.dariusz.kbembed.utils.LoginTest
 
 internal object KBEmbedBuilderImpl : KBEmbedBuilder {
 
@@ -17,10 +18,6 @@ internal object KBEmbedBuilderImpl : KBEmbedBuilder {
     private lateinit var _kbCore: KBCore
 
     private lateinit var _kbEmbedComponents: KBEmbedComponents
-
-    private lateinit var _loginScreenViewModel: LoginScreenViewModel
-
-    private lateinit var _loginUtils: LoginUtils
 
     override fun setActivity(activity: ComponentActivity): KBEmbedBuilder {
         _activity = activity
@@ -38,27 +35,21 @@ internal object KBEmbedBuilderImpl : KBEmbedBuilder {
         } else if (!::_kbCore.isInitialized) {
             throw IllegalArgumentException("KBCore not initialized")
         } else {
-            _activity.openKB(_kbCore)
-        }
-       return KBEmbedImpl(_kbEmbedComponents, LoginUtils(_loginScreenViewModel, _kbEmbedComponents.navigator))
-    }
-
-    private fun ComponentActivity.openKB(
-        kbCore: KBCore
-    ) = setContent {
-        setKBEmbedComponents(KBEmbedComponents(rememberNavController(), kbCore))
-        setLoginUtils(LoginUtils(kbCore.getViewModel(LoginScreenViewModel::class), _kbEmbedComponents.navigator))
-        MyApplicationTheme {
-            MainNavHost(_kbEmbedComponents)
+            _activity.apply {
+                setContent {
+                    val navController = rememberNavController()
+                    setKBEmbedComponents(KBEmbedComponents(_kbCore, Navigator(navController)))
+                    MyApplicationTheme {
+                        MainNavHost(_kbEmbedComponents)
+                    }
+                }
+                val loginTest = LoginTest(_kbEmbedComponents)
+                return KBEmbedImpl(_kbEmbedComponents.navigator, loginTest)
+            }
         }
     }
 
     private fun setKBEmbedComponents(kbEmbedComponents: KBEmbedComponents) {
         _kbEmbedComponents = kbEmbedComponents
     }
-
-    private fun setLoginUtils(loginUtils: LoginUtils) {
-        _loginUtils = loginUtils
-    }
-
 }
