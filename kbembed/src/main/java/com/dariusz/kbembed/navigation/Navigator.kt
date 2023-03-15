@@ -1,10 +1,9 @@
 package com.dariusz.kbembed.navigation
 
 import android.util.Log
-import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class Navigator : ViewModel() {
+class Navigator {
 
     val currentDestination = MutableStateFlow(Destination.HOME.route)
 
