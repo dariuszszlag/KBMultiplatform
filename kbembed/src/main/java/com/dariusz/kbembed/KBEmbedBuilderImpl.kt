@@ -2,22 +2,16 @@ package com.dariusz.kbembed
 
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.platform.LocalContext
-import androidx.navigation.compose.rememberNavController
 import com.dariusz.kbcore.KBCore
 import com.dariusz.kbembed.navigation.MainNavHost
-import com.dariusz.kbembed.navigation.Navigator
 import com.dariusz.kbembed.ui.theme.MyApplicationTheme
 import com.dariusz.kbembed.utils.LoginTest
 
-internal object KBEmbedBuilderImpl : KBEmbedBuilder {
+internal object KBEmbedBuilderImpl : KBEmbedBuilder, KBEmbedComponentsProvider() {
 
     private lateinit var _activity: ComponentActivity
 
     private lateinit var _kbCore: KBCore
-
-    private lateinit var _kbEmbedComponents: KBEmbedComponents
 
     override fun setActivity(activity: ComponentActivity): KBEmbedBuilder {
         _activity = activity
@@ -35,23 +29,18 @@ internal object KBEmbedBuilderImpl : KBEmbedBuilder {
         } else if (!::_kbCore.isInitialized) {
             throw IllegalArgumentException("KBCore not initialized")
         } else {
+            setKbCore(_kbCore)
             _activity.apply {
                 setContent {
-                    val navController = rememberNavController()
+                    setNavHostController()
                     MyApplicationTheme {
-                        MainNavHost(_kbEmbedComponents)
-                    }
-                    LaunchedEffect(navController, LocalContext.current, _activity, _kbCore) {
-                        setKBEmbedComponents(KBEmbedComponents(_kbCore, Navigator(navController)))
+                        MainNavHost(kbEmbedComponents)
                     }
                 }
-                val loginTest = LoginTest(_kbEmbedComponents)
-                return KBEmbedImpl(_kbEmbedComponents.navigator, loginTest)
+                val loginTest = LoginTest(kbEmbedComponents)
+                return KBEmbedImpl(kbEmbedComponents, loginTest)
             }
         }
     }
 
-    private fun setKBEmbedComponents(kbEmbedComponents: KBEmbedComponents) {
-        _kbEmbedComponents = kbEmbedComponents
-    }
 }
