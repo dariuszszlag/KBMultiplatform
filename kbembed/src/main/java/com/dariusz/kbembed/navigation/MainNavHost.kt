@@ -7,7 +7,7 @@ import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.dariusz.kbembed.KBEmbedSettings
+import com.dariusz.kbembed.KBEmbedComponents
 import com.dariusz.kbembed.ui.screens.drafts.DraftsScreen
 import com.dariusz.kbembed.ui.screens.drafts.DraftsScreenViewModel
 import com.dariusz.kbembed.ui.screens.home.HomeScreen
@@ -19,9 +19,9 @@ import com.dariusz.kbembed.ui.screens.posts.PostsScreenViewModel
 import com.dariusz.kbembed.utils.ComposeViewModel.composeViewModel
 
 @Composable
-fun MainNavHost(kbEmbedSettings: KBEmbedSettings) {
-    val dataSource = kbEmbedSettings.kbCore
-    val navigator = kbEmbedSettings.navigator
+fun MainNavHost(kbEmbedComponents: KBEmbedComponents) {
+    val dataSource = kbEmbedComponents.kbCore
+    val navigator = kbEmbedComponents.navigator
     val homeScreenViewModel = composeViewModel {
         HomeScreenViewModel(dataSource)
     }
@@ -35,7 +35,7 @@ fun MainNavHost(kbEmbedSettings: KBEmbedSettings) {
         LoginScreenViewModel(dataSource)
     }
     NavHost(
-        navController = kbEmbedSettings.navController as NavHostController,
+        navController = kbEmbedComponents.navController as NavHostController,
         startDestination = Destination.HOME.route
     ) {
         composable(Destination.HOME.route) {

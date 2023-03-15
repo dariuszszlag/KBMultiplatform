@@ -1,7 +1,6 @@
 package com.dariusz.kbembed
 
 import com.dariusz.kbembed.navigation.Navigator
-
 interface KBEmbed {
 
     fun getNavigator(): Navigator

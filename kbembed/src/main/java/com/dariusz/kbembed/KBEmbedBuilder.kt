@@ -5,10 +5,12 @@ import com.dariusz.kbcore.KBCore
 
 interface KBEmbedBuilder {
 
-    fun setActivity(activity: ComponentActivity): KBEmbedBuilderImpl
+    fun setActivity(activity: ComponentActivity)
 
-    fun setKBCore(kbCore: KBCore): KBEmbedBuilderImpl
+    fun setKBCore(kbCore: KBCore)
 
     fun build(): KBEmbed
 
 }
+
+fun kbEmbedBuilder(): KBEmbedBuilder = KBEmbedBuilderImpl
