@@ -4,10 +4,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.dariusz.kbcore.KBCore
 import com.dariusz.kbembed.navigation.MainNavHost
+import com.dariusz.kbembed.navigation.Navigator
 import com.dariusz.kbembed.ui.theme.MyApplicationTheme
 import com.dariusz.kbembed.utils.LoginTest
 
-internal object KBEmbedBuilderImpl : KBEmbedBuilder, KBEmbedComponentsProvider() {
+internal class KBEmbedBuilderImpl : KBEmbedBuilder {
 
     private lateinit var _activity: ComponentActivity
 
@@ -29,16 +30,15 @@ internal object KBEmbedBuilderImpl : KBEmbedBuilder, KBEmbedComponentsProvider()
         } else if (!::_kbCore.isInitialized) {
             throw IllegalArgumentException("KBCore not initialized")
         } else {
-            setKbCore(_kbCore)
             _activity.apply {
+                val navigator = Navigator()
+                val loginTest = LoginTest(_kbCore, navigator)
                 setContent {
-                    setNavHostController()
                     MyApplicationTheme {
-                        MainNavHost(kbEmbedComponents)
+                        MainNavHost(_kbCore, navigator)
                     }
                 }
-                val loginTest = LoginTest(kbEmbedComponents)
-                return KBEmbedImpl(kbEmbedComponents, loginTest)
+                return KBEmbedImpl(navigator, loginTest)
             }
         }
     }

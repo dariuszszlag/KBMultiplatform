@@ -1,25 +1,30 @@
 package com.dariusz.kbembed.navigation
 
-import androidx.navigation.NavController
+import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.ViewModel
 
-class Navigator(internal val navController: NavController) {
+class Navigator : ViewModel() {
 
-    fun navigateHome() = navController.navigateTo(Destination.HOME)
+    val currentDestination = mutableStateOf(Destination.HOME.route)
 
-    fun navigateToDrafts() = navController.navigateTo(Destination.DRAFTS)
+    fun navigateHome() = navigateTo(Destination.HOME)
 
-    fun navigateToDraft(draftId: Int) = navController.navigateTo(Destination.DRAFTS, draftId.toString())
+    fun navigateToDrafts() = navigateTo(Destination.DRAFTS)
 
-    fun navigateToPosts() = navController.navigateTo(Destination.POSTS)
+    fun navigateToDraft(draftId: Int) = navigateTo(Destination.DRAFTS, draftId.toString())
 
-    fun navigateToPost(postId: Int) = navController.navigateTo(Destination.POSTS, postId.toString())
+    fun navigateToPosts() = navigateTo(Destination.POSTS)
 
-    fun navigateToLogin() = navController.navigateTo(Destination.LOGIN)
+    fun navigateToPost(postId: Int) = navigateTo(Destination.POSTS, postId.toString())
 
-    private fun NavController.navigateTo(destination: Destination) =
-        navigate(destination.route)
+    fun navigateToLogin() = navigateTo(Destination.LOGIN)
 
-    private fun NavController.navigateTo(destination: Destination, args: String? = null) =
-        navigate(destination.route + "/" + args)
+    private fun navigateTo(destination: Destination) {
+        currentDestination.value = destination.route
+    }
+
+    private fun navigateTo(destination: Destination, args: String? = null) {
+        currentDestination.value = destination.route + "/" + args
+    }
 
 }

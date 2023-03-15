@@ -13,4 +13,4 @@ interface KBEmbedBuilder {
 
 }
 
-fun kbEmbedBuilder(): KBEmbedBuilder = KBEmbedBuilderImpl
+fun kbEmbedBuilder(): KBEmbedBuilder = KBEmbedBuilderImpl()

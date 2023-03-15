@@ -1,14 +1,17 @@
 package com.dariusz.kbembed.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.dariusz.kbembed.KBEmbedComponents
+import androidx.navigation.compose.rememberNavController
+import com.dariusz.kbcore.KBCore
 import com.dariusz.kbembed.ui.screens.drafts.DraftsScreen
 import com.dariusz.kbembed.ui.screens.drafts.DraftsScreenViewModel
 import com.dariusz.kbembed.ui.screens.home.HomeScreen
@@ -20,14 +23,16 @@ import com.dariusz.kbembed.ui.screens.posts.PostsScreenViewModel
 import com.dariusz.kbembed.utils.ComposeViewModel.getViewModel
 
 @Composable
-fun MainNavHost(kbEmbedComponents: KBEmbedComponents) {
-    val dataSource = kbEmbedComponents.kbCore
-    val navigator = kbEmbedComponents.navigator
+fun MainNavHost(
+    dataSource: KBCore,
+    appNavigator: Navigator,
+    navHostController: NavHostController = rememberNavController()
+) {
     val homeScreenViewModel = dataSource.getViewModel(HomeScreenViewModel::class)
     val draftsScreenViewModel = dataSource.getViewModel(DraftsScreenViewModel::class)
     val postsScreenViewModel = dataSource.getViewModel(PostsScreenViewModel::class)
     val loginScreenViewModel = dataSource.getViewModel(LoginScreenViewModel::class)
-    CustomNavHost(navigator) {
+    CustomNavHost(navHostController, appNavigator) { navigator ->
         composable(Destination.HOME.route) {
             val homeScreenState by remember(homeScreenViewModel) { homeScreenViewModel.homeScreenState }.collectAsState()
             HomeScreen(
@@ -68,9 +73,16 @@ fun MainNavHost(kbEmbedComponents: KBEmbedComponents) {
 
 @Composable
 private fun CustomNavHost(
+    navHostController: NavHostController,
     navigator: Navigator,
     startDestination: Destination = Destination.HOME,
-    builder: NavGraphBuilder.() -> Unit
-){
-    NavHost(navController = navigator.navController as NavHostController, startDestination = startDestination.route, builder = builder)
+    builder: NavGraphBuilder.(Navigator) -> Unit
+) {
+    val currentDestination by rememberSaveable(navigator.currentDestination) { navigator.currentDestination }
+    NavHost(navController = navHostController, startDestination = startDestination.route) {
+        builder(navigator)
+    }
+    LaunchedEffect(navigator.currentDestination) {
+        navHostController.navigate(currentDestination)
+    }
 }
