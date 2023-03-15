@@ -1,12 +1,14 @@
 package com.dariusz.kbembed.utils
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import com.dariusz.kbembed.ui.components.CenteredText
 import com.dariusz.kbembed.ui.components.LoadingComponent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 
+@Stable
 sealed class Result<out T> {
     data class Success<T>(val data: T) : Result<T>()
     data class Error(val errorMessage: String) : Result<Nothing>()
