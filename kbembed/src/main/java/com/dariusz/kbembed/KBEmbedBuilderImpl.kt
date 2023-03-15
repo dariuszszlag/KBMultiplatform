@@ -20,12 +20,14 @@ internal object KBEmbedBuilderImpl : KBEmbedBuilder {
 
     private lateinit var _loginScreenViewModel: LoginScreenViewModel
 
-    override fun setActivity(activity: ComponentActivity) {
+    override fun setActivity(activity: ComponentActivity): KBEmbedBuilder {
         _activity = activity
+        return this
     }
 
-    override fun setKBCore(kbCore: KBCore) {
+    override fun setKBCore(kbCore: KBCore): KBEmbedBuilder {
         _kbCore = kbCore
+        return this
     }
 
     override fun build(): KBEmbed {
