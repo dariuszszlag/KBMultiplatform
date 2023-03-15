@@ -8,7 +8,7 @@ import com.dariusz.kbembed.navigation.MainNavHost
 import com.dariusz.kbembed.ui.screens.login.LoginScreenViewModel
 import com.dariusz.kbembed.ui.theme.MyApplicationTheme
 import com.dariusz.kbembed.utils.LoginUtils
-import com.dariusz.kbembed.utils.ComposeViewModel.composeViewModel
+import com.dariusz.kbembed.utils.ComposeViewModel.getViewModel
 
 internal object KBEmbedBuilderImpl : KBEmbedBuilder {
 
@@ -19,6 +19,8 @@ internal object KBEmbedBuilderImpl : KBEmbedBuilder {
     private lateinit var _kbEmbedComponents: KBEmbedComponents
 
     private lateinit var _loginScreenViewModel: LoginScreenViewModel
+
+    private lateinit var _loginUtils: LoginUtils
 
     override fun setActivity(activity: ComponentActivity): KBEmbedBuilder {
         _activity = activity
@@ -44,16 +46,19 @@ internal object KBEmbedBuilderImpl : KBEmbedBuilder {
     private fun ComponentActivity.openKB(
         kbCore: KBCore
     ) = setContent {
-        _kbEmbedComponents = KBEmbedComponents(
-            rememberNavController(),
-            kbCore
-        )
-        _loginScreenViewModel = composeViewModel {
-            LoginScreenViewModel(_kbEmbedComponents.kbCore)
-        }
+        setKBEmbedComponents(KBEmbedComponents(rememberNavController(), kbCore))
+        setLoginUtils(LoginUtils(kbCore.getViewModel(LoginScreenViewModel::class), _kbEmbedComponents.navigator))
         MyApplicationTheme {
             MainNavHost(_kbEmbedComponents)
         }
+    }
+
+    private fun setKBEmbedComponents(kbEmbedComponents: KBEmbedComponents) {
+        _kbEmbedComponents = kbEmbedComponents
+    }
+
+    private fun setLoginUtils(loginUtils: LoginUtils) {
+        _loginUtils = loginUtils
     }
 
 }

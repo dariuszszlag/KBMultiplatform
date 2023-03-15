@@ -16,24 +16,16 @@ import com.dariusz.kbembed.ui.screens.login.LoginScreen
 import com.dariusz.kbembed.ui.screens.login.LoginScreenViewModel
 import com.dariusz.kbembed.ui.screens.posts.PostsScreen
 import com.dariusz.kbembed.ui.screens.posts.PostsScreenViewModel
-import com.dariusz.kbembed.utils.ComposeViewModel.composeViewModel
+import com.dariusz.kbembed.utils.ComposeViewModel.getViewModel
 
 @Composable
 fun MainNavHost(kbEmbedComponents: KBEmbedComponents) {
     val dataSource = kbEmbedComponents.kbCore
     val navigator = kbEmbedComponents.navigator
-    val homeScreenViewModel = composeViewModel {
-        HomeScreenViewModel(dataSource)
-    }
-    val draftsScreenViewModel = composeViewModel {
-        DraftsScreenViewModel(dataSource)
-    }
-    val postsScreenViewModel = composeViewModel {
-        PostsScreenViewModel(dataSource)
-    }
-    val loginScreenViewModel = composeViewModel {
-        LoginScreenViewModel(dataSource)
-    }
+    val homeScreenViewModel = dataSource.getViewModel(HomeScreenViewModel::class)
+    val draftsScreenViewModel = dataSource.getViewModel(DraftsScreenViewModel::class)
+    val postsScreenViewModel = dataSource.getViewModel(PostsScreenViewModel::class)
+    val loginScreenViewModel = dataSource.getViewModel(LoginScreenViewModel::class)
     NavHost(
         navController = kbEmbedComponents.navController as NavHostController,
         startDestination = Destination.HOME.route
