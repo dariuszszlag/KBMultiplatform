@@ -5,7 +5,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -75,7 +74,7 @@ fun MainNavHost(
         }
     }
 
-    val currentDestination by rememberSaveable(navigator) { navigator.currentDestination }.collectAsState()
+    val currentDestination by remember(navigator) { navigator.currentDestination }.collectAsState()
     LaunchedEffect(currentDestination){
         navHostController.navigate(currentDestination)
     }

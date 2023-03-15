@@ -31,15 +31,13 @@ internal class KBEmbedBuilderImpl(
         } else if (!::_kbCore.isInitialized) {
             throw IllegalArgumentException("KBCore not initialized")
         } else {
-            _activity.apply {
-                setContent {
-                    MyApplicationTheme {
-                        MainNavHost(_kbCore, navigator)
-                    }
+            _activity.setContent {
+                MyApplicationTheme {
+                    MainNavHost(_kbCore, navigator)
                 }
-                return KBEmbedImpl(_kbCore, navigator)
             }
         }
+        return KBEmbedImpl(_kbCore, navigator)
     }
 
 }
