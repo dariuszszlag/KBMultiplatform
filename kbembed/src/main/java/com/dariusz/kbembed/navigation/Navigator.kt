@@ -2,7 +2,7 @@ package com.dariusz.kbembed.navigation
 
 import androidx.navigation.NavController
 
-class Navigator(val navController: NavController) {
+class Navigator(internal val navController: NavController) {
 
     fun navigateHome() = navController.navigateTo(Destination.HOME)
 

@@ -2,8 +2,8 @@ package com.dariusz.kbembed
 
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.rememberNavController
 import com.dariusz.kbcore.KBCore
 import com.dariusz.kbembed.navigation.MainNavHost
@@ -38,9 +38,11 @@ internal object KBEmbedBuilderImpl : KBEmbedBuilder {
             _activity.apply {
                 setContent {
                     val navController = rememberNavController()
-                    setKBEmbedComponents(KBEmbedComponents(_kbCore, Navigator(navController)))
                     MyApplicationTheme {
                         MainNavHost(_kbEmbedComponents)
+                    }
+                    LaunchedEffect(navController, LocalContext.current, _activity, _kbCore) {
+                        setKBEmbedComponents(KBEmbedComponents(_kbCore, Navigator(navController)))
                     }
                 }
                 val loginTest = LoginTest(_kbEmbedComponents)

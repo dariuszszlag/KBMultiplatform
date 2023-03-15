@@ -7,6 +7,7 @@ internal class KBEmbedImpl(
     private val navigator: Navigator,
     private val loginTest: LoginTest
 ): KBEmbed {
+
     override fun getNavigator(): Navigator = navigator
 
     override fun login(password: String) = loginTest.loginWithCorrectPassword(password)
