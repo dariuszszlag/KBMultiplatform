@@ -1,11 +1,12 @@
 package com.dariusz.kbembed.navigation
 
-import androidx.compose.runtime.mutableStateOf
+import android.util.Log
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 
 class Navigator : ViewModel() {
 
-    val currentDestination = mutableStateOf(Destination.HOME.route)
+    val currentDestination = MutableStateFlow(Destination.HOME.route)
 
     fun navigateHome() = navigateTo(Destination.HOME)
 
@@ -21,6 +22,7 @@ class Navigator : ViewModel() {
 
     private fun navigateTo(destination: Destination) {
         currentDestination.value = destination.route
+        Log.e("navigateTo", "destination: ${destination.route}")
     }
 
     private fun navigateTo(destination: Destination, args: String? = null) {

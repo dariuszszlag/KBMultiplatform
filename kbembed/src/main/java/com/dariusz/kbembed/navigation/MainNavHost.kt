@@ -6,7 +6,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -25,14 +24,20 @@ import com.dariusz.kbembed.utils.ComposeViewModel.getViewModel
 @Composable
 fun MainNavHost(
     dataSource: KBCore,
-    appNavigator: Navigator,
-    navHostController: NavHostController = rememberNavController()
+    navigator: Navigator
 ) {
+
+    val navHostController: NavHostController = rememberNavController()
+
     val homeScreenViewModel = dataSource.getViewModel(HomeScreenViewModel::class)
     val draftsScreenViewModel = dataSource.getViewModel(DraftsScreenViewModel::class)
     val postsScreenViewModel = dataSource.getViewModel(PostsScreenViewModel::class)
     val loginScreenViewModel = dataSource.getViewModel(LoginScreenViewModel::class)
-    CustomNavHost(navHostController, appNavigator) { navigator ->
+
+    NavHost(
+        navController = navHostController,
+        startDestination = Destination.HOME.route
+    ) {
         composable(Destination.HOME.route) {
             val homeScreenState by remember(homeScreenViewModel) { homeScreenViewModel.homeScreenState }.collectAsState()
             HomeScreen(
@@ -69,20 +74,10 @@ fun MainNavHost(
             )
         }
     }
-}
 
-@Composable
-private fun CustomNavHost(
-    navHostController: NavHostController,
-    navigator: Navigator,
-    startDestination: Destination = Destination.HOME,
-    builder: NavGraphBuilder.(Navigator) -> Unit
-) {
-    val currentDestination by rememberSaveable(navigator.currentDestination) { navigator.currentDestination }
-    NavHost(navController = navHostController, startDestination = startDestination.route) {
-        builder(navigator)
-    }
-    LaunchedEffect(navigator.currentDestination) {
+    val currentDestination by rememberSaveable(navigator) { navigator.currentDestination }.collectAsState()
+    LaunchedEffect(currentDestination){
         navHostController.navigate(currentDestination)
     }
+
 }

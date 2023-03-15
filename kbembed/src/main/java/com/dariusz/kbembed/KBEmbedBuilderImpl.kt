@@ -6,9 +6,10 @@ import com.dariusz.kbcore.KBCore
 import com.dariusz.kbembed.navigation.MainNavHost
 import com.dariusz.kbembed.navigation.Navigator
 import com.dariusz.kbembed.ui.theme.MyApplicationTheme
-import com.dariusz.kbembed.utils.LoginTest
 
-internal class KBEmbedBuilderImpl : KBEmbedBuilder {
+internal class KBEmbedBuilderImpl(
+    private val navigator: Navigator
+) : KBEmbedBuilder {
 
     private lateinit var _activity: ComponentActivity
 
@@ -31,14 +32,12 @@ internal class KBEmbedBuilderImpl : KBEmbedBuilder {
             throw IllegalArgumentException("KBCore not initialized")
         } else {
             _activity.apply {
-                val navigator = Navigator()
-                val loginTest = LoginTest(_kbCore, navigator)
                 setContent {
                     MyApplicationTheme {
                         MainNavHost(_kbCore, navigator)
                     }
                 }
-                return KBEmbedImpl(navigator, loginTest)
+                return KBEmbedImpl(_kbCore, navigator)
             }
         }
     }

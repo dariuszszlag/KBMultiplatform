@@ -2,6 +2,7 @@ package com.dariusz.kbembed
 
 import androidx.activity.ComponentActivity
 import com.dariusz.kbcore.KBCore
+import com.dariusz.kbembed.navigation.Navigator
 
 interface KBEmbedBuilder {
 
@@ -13,4 +14,4 @@ interface KBEmbedBuilder {
 
 }
 
-fun kbEmbedBuilder(): KBEmbedBuilder = KBEmbedBuilderImpl()
+fun kbEmbedBuilder(): KBEmbedBuilder = KBEmbedBuilderImpl(Navigator())

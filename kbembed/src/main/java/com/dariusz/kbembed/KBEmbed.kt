@@ -8,4 +8,6 @@ interface KBEmbed {
 
     fun login(password: String)
 
+    fun logout()
+
 }
