@@ -3,7 +3,7 @@ package com.dariusz.kbmultiapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import com.dariusz.kbcore.kbCoreBuilder
-import com.dariusz.kbembed.KBEmbed
+import com.dariusz.kbembed.kbEmbedBuilder
 import kotlinx.coroutines.Dispatchers
 
 class MainActivity : ComponentActivity() {
@@ -13,9 +13,10 @@ class MainActivity : ComponentActivity() {
 
         val kbCore = kbCoreBuilder().coroutineDispatcher(Dispatchers.IO).build()
 
-        KBEmbed.apply {
-            openKB(kbCore)
-        }
+        kbEmbedBuilder()
+            .setActivity(this)
+            .setKBCore(kbCore)
+            .build()
 
     }
 }
