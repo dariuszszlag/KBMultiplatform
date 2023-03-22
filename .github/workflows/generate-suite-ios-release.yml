@@ -1,0 +1,27 @@
+name: Create KBSuite for Apple
+
+on:
+  push:
+    tags:
+      - "v*.*.*-ALL"
+
+  workflow_dispatch:
+
+jobs:
+  publish:
+    name: Release suite
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Publish KBCore for iOS
+        run: pod trunk push kbcore/KBCore.podspec
+        env:
+          COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_GITHUB_SECRET }}
+

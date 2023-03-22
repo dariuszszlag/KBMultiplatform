@@ -3,6 +3,7 @@ plugins {
     id("com.android.library")
     id("maven-publish")
     kotlin("plugin.serialization") version "1.8.10"
+    kotlin("native.cocoapods")
 }
 
 group = "com.dariusz"
@@ -12,6 +13,7 @@ val GIT_USER: String? by project
 val GIT_TOKEN: String? by project
 
 kotlin {
+
     android {
         publishLibraryVariants("release")
         publishLibraryVariantsGroupedByFlavor = true
@@ -75,6 +77,19 @@ kotlin {
             iosArm64Test.dependsOn(this)
             iosSimulatorArm64Test.dependsOn(this)
         }
+    }
+
+    cocoapods {
+        version = System.getenv("VERSION_NAME") ?: "0.1"
+        summary = "KBCore for KB"
+        homepage = "github.com/dariuszszlag/KBMultiplatform"
+        name = "KBCore"
+        framework {
+            baseName = "KBCore"
+            isStatic = false
+        }
+        ios.deploymentTarget = "16.3.1"
+        podfile = project.file("../iosApp/Podfile")
     }
 }
 

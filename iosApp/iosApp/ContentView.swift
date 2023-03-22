@@ -1,5 +1,5 @@
 import SwiftUI
-import shared
+import kbcore
 
 struct ContentView: View {
 	let greet = Greeting().greet()
@@ -7,6 +7,7 @@ struct ContentView: View {
 	var body: some View {
 		Text(greet)
 	}
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
