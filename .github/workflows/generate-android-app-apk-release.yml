@@ -1,9 +1,9 @@
-name: Create android app release
+name: Create Android app
 
 on:
   push:
     tags:
-      - "v*.*.*-APP"
+      - "v*.*.*-android-app"
 
   workflow_dispatch:
 

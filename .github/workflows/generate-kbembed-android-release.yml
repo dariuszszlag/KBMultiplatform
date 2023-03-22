@@ -1,9 +1,9 @@
-name: Create KBEmbed release
+name: Create KBEmbed
 
 on:
   push:
     tags:
-      - "v*.*.*-EMBED"
+      - "v*.*.*-embed"
 
   workflow_dispatch:
 

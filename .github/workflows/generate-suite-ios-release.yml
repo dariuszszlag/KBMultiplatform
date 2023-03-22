@@ -1,9 +1,9 @@
-name: Create KBSuite for Apple
+name: Create KBSuite (iOS)
 
 on:
   push:
     tags:
-      - "v*.*.*-ALL"
+      - "v*.*.*-all-ios"
 
   workflow_dispatch:
 

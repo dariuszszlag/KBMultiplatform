@@ -1,15 +1,15 @@
-name: Create KBSuite
+name: Create KBCore (android)
 
 on:
   push:
     tags:
-      - "v*.*.*-ALL"
+      - "v*.*.*-core-iOS"
 
   workflow_dispatch:
 
 jobs:
   publish:
-    name: Release suite
+    name: Release KBCore
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -21,9 +21,6 @@ jobs:
 
       - name: Set tag version as env variable
         run: ./generate-version.bash
-
-      - name: Set version code as env variable
-        run: echo "VERSION_CODE=$(git log --oneline | wc -l)" >> $GITHUB_ENV
 
       - name: Set access token as env variable
         run: echo "ACCESS_TOKEN=${{ secrets.SECRET_GITHUB_CODE_ACCESS }}" >> $GITHUB_ENV
@@ -37,16 +34,5 @@ jobs:
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
 
-      - name: Publish KBCore to GitHub Package Registry
+      - name: Publish to GitHub Package Registry 🚀
         run: ./gradlew :kbcore:publish -PGIT_USER=${{ github.actor }} -PGIT_TOKEN=${{ secrets.SECRET_GITHUB_CODE }}
-
-      - name: Publish KBEmbed to GitHub Package Registry
-        run: ./gradlew :kbembed:publish -PGIT_USER=${{ github.actor }} -PGIT_TOKEN=${{ secrets.SECRET_GITHUB_CODE }}
-
-      - name: Build release APK
-        run: ./gradlew :androidApp:assembleRelease
-
-      - name: Create release for Android APP on Github
-        run: hub release create -a ./androidApp/build/outputs/apk/release/androidApp-release-unsigned.apk -m "${GITHUB_REF##*/}" $VERSION_NAME
-        env:
-          GITHUB_TOKEN: ${{ secrets.SECRET_GITHUB_CODE }}

@@ -1,9 +1,9 @@
-name: Create KBCore for Apple release
+name: Create KBCore (iOS)
 
 on:
   push:
     tags:
-      - "v*.*.*-IOS"
+      - "v*.*.*-core-iOS"
 
   workflow_dispatch:
 
@@ -16,12 +16,25 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: latest-stable
+      - name: Change wrapper permissions
+        run: chmod +x ./generate-version.bash
 
-      - name: Publish KBCore for iOS
-        run: pod trunk push kbcore/KBCore.podspec
-        env:
-          COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_GITHUB_SECRET }}
+      - name: Set tag version as env variable
+        run: ./generate-version.bash
+
+      - name: Set Up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: temurin
+
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
+
+      - name: Publish XCFramework for iOS
+        run: |
+          ./gradlew :kbcore:podspec
+          ./gradlew :kbcore:podImport
+          ./gradlew :kbcore:podInstall
+          ./gradlew :kbcore:podPublishXCFramework
 
