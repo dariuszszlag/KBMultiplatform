@@ -84,13 +84,11 @@ kotlin {
         summary = "KBCore for KB"
         homepage = "github.com/dariuszszlag/KBMultiplatform"
         name = "KBCore"
-        source =
-            Git(
+        source = Git(
                 url = uri("https://github.com/dariuszszlag/KBMultiplatform.git"),
                 tag = project.version.toString()
             ).toString()
         framework {
-            baseName = "KBCore"
             isStatic = false
         }
         ios.deploymentTarget = "16.3.1"
@@ -143,10 +141,6 @@ tasks.withType<PublishToMavenRepository> {
     dependsOn(tasks.assemble)
 }
 
-configurations {
-    kotlinCompilerClasspath
-}
-
-data class Git(val url: java.net.URI, val tag: String) {
+private data class Git(val url: java.net.URI, val tag: String) {
     override fun toString(): String = ":git => '$url', :tag => '$tag'"
 }
