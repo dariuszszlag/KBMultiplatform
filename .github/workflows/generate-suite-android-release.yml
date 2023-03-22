@@ -3,7 +3,7 @@ name: Create KBSuite (android)
 on:
   push:
     tags:
-      - "v*.*.*-all"
+      - "v*.*.*-all-android"
 
   workflow_dispatch:
 

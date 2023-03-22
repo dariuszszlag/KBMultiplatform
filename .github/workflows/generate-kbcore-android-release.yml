@@ -3,7 +3,7 @@ name: Create KBCore (android)
 on:
   push:
     tags:
-      - "v*.*.*-core-iOS"
+      - "v*.*.*-core-android"
 
   workflow_dispatch:
 
