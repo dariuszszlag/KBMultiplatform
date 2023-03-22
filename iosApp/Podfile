@@ -1,12 +1,10 @@
-source 'https://cdn.cocoapods.org/'
-
-inhibit_all_warnings!
+source 'https://github.com/CocoaPods/Specs.git'
+source 'https://github.com/dariuszszlag/KBMultiplatform.git'
 
 use_frameworks!
 
 target 'iosApp' do
 
-  pod 'kbcore',
-    :git => 'https://github.com/dariuszszlag/KBMultiplatform.git', :tag => '1.2.0'
+    pod 'kbcore', '~> 1.2.0'
 
 end

@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.dariusz"
-version = System.getenv("VERSION_NAME")
+version = System.getenv("VERSION_NAME") ?: "0.1"
 
 val GIT_USER: String? by project
 val GIT_TOKEN: String? by project
@@ -80,10 +80,15 @@ kotlin {
     }
 
     cocoapods {
-        version = System.getenv("VERSION_NAME") ?: "0.1"
+        version = project.version.toString()
         summary = "KBCore for KB"
         homepage = "github.com/dariuszszlag/KBMultiplatform"
         name = "KBCore"
+        source =
+            Git(
+                url = uri("https://github.com/dariuszszlag/KBMultiplatform.git"),
+                tag = project.version.toString()
+            ).toString()
         framework {
             baseName = "KBCore"
             isStatic = false
@@ -142,3 +147,6 @@ configurations {
     kotlinCompilerClasspath
 }
 
+data class Git(val url: java.net.URI, val tag: String) {
+    override fun toString(): String = ":git => '$url', :tag => '$tag'"
+}
