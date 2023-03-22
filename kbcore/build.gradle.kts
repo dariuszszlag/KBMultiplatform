@@ -88,11 +88,12 @@ kotlin {
                 url = uri("https://github.com/dariuszszlag/KBMultiplatform.git"),
                 tag = project.version.toString()
             ).toString()
+        ios.deploymentTarget = "16.3.1"
+        podfile = project.file("../iosApp/Podfile")
+        license = License("MIT", "MIT License").toString()
         framework {
             isStatic = false
         }
-        ios.deploymentTarget = "16.3.1"
-        podfile = project.file("../iosApp/Podfile")
     }
 }
 
@@ -143,4 +144,8 @@ tasks.withType<PublishToMavenRepository> {
 
 private data class Git(val url: java.net.URI, val tag: String) {
     override fun toString(): String = ":git => '$url', :tag => '$tag'"
+}
+
+private data class License(val type: String, val text: String) {
+    override fun toString(): String = ":type => '$type', :text => '$text'"
 }
