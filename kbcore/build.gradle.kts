@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.dariusz"
-version = System.getenv("VERSION_NAME") ?: "0.1"
+version = System.getenv("VERSION_NAME")
 
 val GIT_USER: String? by project
 val GIT_TOKEN: String? by project
@@ -31,6 +31,24 @@ kotlin {
     ).forEach {
         it.binaries.framework {
             baseName = "shared"
+        }
+
+        cocoapods {
+            version = System.getenv("VERSION_NAME") ?: "0.1"
+            summary = "KBCore for KB"
+            homepage = "github.com/dariuszszlag/KBMultiplatform"
+            name = "kbcore"
+            source = Git(
+                url = uri("https://github.com/dariuszszlag/KBMultiplatform.git"),
+                tag = System.getenv("VERSION_NAME") ?: "0.1"
+            ).toString()
+            ios.deploymentTarget = "16.3.1"
+            license = License("MIT", "MIT License").toString()
+            podfile = project.file("../iosApp/Podfile")
+            framework {
+                isStatic = false
+                baseName = "shared"
+            }
         }
     }
 
@@ -79,22 +97,6 @@ kotlin {
         }
     }
 
-    cocoapods {
-        version = project.version.toString()
-        summary = "KBCore for KB"
-        homepage = "github.com/dariuszszlag/KBMultiplatform"
-        name = "KBCore"
-        source = Git(
-                url = uri("https://github.com/dariuszszlag/KBMultiplatform.git"),
-                tag = project.version.toString()
-            ).toString()
-        ios.deploymentTarget = "16.3.1"
-        podfile = project.file("../iosApp/Podfile")
-        license = License("MIT", "MIT License").toString()
-        framework {
-            isStatic = false
-        }
-    }
 }
 
 android {

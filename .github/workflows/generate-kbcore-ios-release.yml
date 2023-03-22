@@ -3,7 +3,7 @@ name: Create KBCore for Apple release
 on:
   push:
     tags:
-      - "v*.*.*-CORE"
+      - "v*.*.*-IOS"
 
   workflow_dispatch:
 
