@@ -60,7 +60,7 @@ publishing {
         create<MavenPublication>("maven") {
             description = "Sdk version of KB"
             groupId = "com.dariusz"
-            artifactId = "kbsdk"
+            artifactId = "sdk"
             version = System.getenv("VERSION_NAME")
             artifact("$buildDir/outputs/aar/${artifactId}-release.aar")
         }
