@@ -21,7 +21,7 @@ class Navigator {
 
     private fun navigateTo(destination: Destination) {
         currentDestination.value = destination.route
-        Log.e("navigateTo", "destination: ${destination.route}")
+        Log.i("navigateTo", "destination: ${destination.route}")
     }
 
     private fun navigateTo(destination: Destination, args: String? = null) {

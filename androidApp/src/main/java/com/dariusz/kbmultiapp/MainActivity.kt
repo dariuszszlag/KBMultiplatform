@@ -7,5 +7,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        startActivity(com.dariusz.sdk.MainActivity.intent(this))
     }
 }
