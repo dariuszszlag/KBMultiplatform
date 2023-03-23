@@ -1,8 +1,6 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    id("maven-publish")
-    kotlin("plugin.serialization") version "1.8.10"
 }
 
 group = "com.dariusz"
@@ -13,8 +11,8 @@ val GIT_TOKEN: String? by project
 
 kotlin {
     android {
-        publishLibraryVariants("release")
-        publishLibraryVariantsGroupedByFlavor = true
+      /*  publishLibraryVariants("release")
+        publishLibraryVariantsGroupedByFlavor = true*/
         compilations.all {
             kotlinOptions {
                 jvmTarget = "11"
@@ -97,16 +95,16 @@ android {
             )
         }
     }
-    publishing {
+ /*   publishing {
         multipleVariants {
             withSourcesJar()
             withJavadocJar()
             allVariants()
         }
-    }
+    }*/
 }
 
-publishing {
+/*publishing {
     repositories {
         maven {
             name = "GitHubPackages"
@@ -117,11 +115,13 @@ publishing {
             }
         }
     }
-}
+}*/
 
+/*
 tasks.withType<PublishToMavenRepository> {
     dependsOn(tasks.assemble)
 }
+*/
 
 configurations {
     kotlinCompilerClasspath

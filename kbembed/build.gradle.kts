@@ -1,7 +1,6 @@
 plugins {
     kotlin("android")
     id("com.android.library")
-    id("maven-publish")
 }
 
 group = "com.dariusz"
@@ -44,41 +43,41 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
     }
-    publishing {
+/*    publishing {
         multipleVariants {
             withSourcesJar()
             withJavadocJar()
             allVariants()
         }
-    }
+    }*/
 
 }
 
 dependencies {
-    implementation("com.dariusz:kbcore:0.0.38")
-    implementation(platform("androidx.compose:compose-bom:2023.01.00"))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-tooling")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.foundation:foundation")
-    implementation("androidx.compose.material3:material3")
-    implementation("androidx.compose.runtime:runtime")
-    implementation("androidx.compose.runtime:runtime-saveable")
-    implementation("androidx.navigation:navigation-compose:2.5.3")
-    implementation("androidx.activity:activity-compose:1.6.1")
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.0")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.01.00"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation(project(":kbcore"))
+    api(platform("androidx.compose:compose-bom:2023.01.00"))
+    api("androidx.compose.ui:ui")
+    api("androidx.compose.ui:ui-tooling")
+    api("androidx.compose.ui:ui-tooling-preview")
+    api("androidx.compose.foundation:foundation")
+    api("androidx.compose.material3:material3")
+    api("androidx.compose.runtime:runtime")
+    api("androidx.compose.runtime:runtime-saveable")
+    api("androidx.navigation:navigation-compose:2.5.3")
+    api("androidx.activity:activity-compose:1.6.1")
+    api("androidx.core:core-ktx:1.9.0")
+    api("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0")
+    api("androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.0")
+    testApi("junit:junit:4.13.2")
+    androidTestApi("androidx.test.ext:junit:1.1.5")
+    androidTestApi("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestApi(platform("androidx.compose:compose-bom:2023.01.00"))
+    androidTestApi("androidx.compose.ui:ui-test-junit4")
+    debugApi("androidx.compose.ui:ui-tooling")
+    debugApi("androidx.compose.ui:ui-test-manifest")
 }
 
-publishing {
+/*publishing {
     publications {
         create<MavenPublication>("maven") {
             description = "Embed version of KB"
@@ -98,8 +97,10 @@ publishing {
             }
         }
     }
-}
+}*/
 
+/*
 tasks.withType<PublishToMavenRepository> {
     dependsOn(tasks.assemble)
 }
+*/
