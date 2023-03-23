@@ -1,7 +1,14 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("maven-publish")
 }
+
+group = "com.dariusz"
+version = System.getenv("VERSION_NAME")
+
+val GIT_USER: String? by project
+val GIT_TOKEN: String? by project
 
 android {
     namespace = "com.dariusz.sdk"
@@ -27,6 +34,14 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+
+    publishing {
+        multipleVariants {
+            withSourcesJar()
+            withJavadocJar()
+            allVariants()
+        }
+    }
 }
 
 dependencies {
@@ -38,4 +53,30 @@ dependencies {
     testApi("junit:junit:4.13.2")
     androidTestApi("androidx.test.ext:junit:1.1.5")
     androidTestApi("androidx.test.espresso:espresso-core:3.5.1")
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            description = "Sdk version of KB"
+            groupId = "com.dariusz"
+            artifactId = "kbsdk"
+            version = System.getenv("VERSION_NAME")
+            artifact("$buildDir/outputs/aar/${artifactId}-release.aar")
+        }
+    }
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/dariuszszlag/KBMultiplatform")
+            credentials {
+                username = GIT_USER
+                password = GIT_TOKEN
+            }
+        }
+    }
+}
+
+tasks.withType<PublishToMavenRepository> {
+    dependsOn(tasks.assemble)
 }

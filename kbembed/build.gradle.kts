@@ -54,7 +54,7 @@ android {
 }
 
 dependencies {
-    api(project(":kbcore"))
+    implementation(project(":kbcore"))
     api(platform("androidx.compose:compose-bom:2023.01.00"))
     api("androidx.compose.ui:ui")
     api("androidx.compose.ui:ui-tooling")

@@ -1,4 +1,4 @@
-name: Create KBCore release
+name: Create Sdk release
 
 on:
   push:
@@ -35,4 +35,4 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Publish to GitHub Package Registry 🚀
-        run: ./gradlew :sdk:publish -PGIT_USER=${{ github.actor }} -PGIT_TOKEN=${{ secrets.SECRET_GITHUB_CODE }}
+        run: ./gradlew :kbcore:publish -PGIT_USER=${{ github.actor }} -PGIT_TOKEN=${{ secrets.SECRET_GITHUB_CODE }}
