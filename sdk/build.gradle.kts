@@ -46,6 +46,7 @@ android {
 
 dependencies {
     api(project(":kbembed"))
+    api(project(":kbcore"))
     api("androidx.core:core-ktx:1.7.0")
     api("androidx.appcompat:appcompat:1.6.1")
     api("com.google.android.material:material:1.8.0")
