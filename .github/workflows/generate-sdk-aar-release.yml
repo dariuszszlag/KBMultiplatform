@@ -1,9 +1,9 @@
-name: Create KBCore release
+name: Create Sdk release
 
 on:
   push:
     tags:
-      - "v*.*.*-CORE"
+      - "v*.*.*-SDK"
 
   workflow_dispatch:
 
