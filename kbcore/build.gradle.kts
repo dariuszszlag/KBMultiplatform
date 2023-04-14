@@ -128,9 +128,9 @@ tasks.withType<PublishToMavenRepository> {
 }
 
 kmmbridge {
+    manualVersions()
     versionPrefix.set(System.getenv("VERSION_NAME"))
     spm(spmDirectory = "../")
-    gitTagVersions()
     mavenPublishArtifacts()
 }
 
