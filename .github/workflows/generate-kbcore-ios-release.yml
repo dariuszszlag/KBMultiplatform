@@ -44,7 +44,7 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Build Release
-        run: ./gradlew :kbcore:kmmBridgePublish -PENABLE_PUBLISHING=true -PGIT_USER=${{ github.actor }} -PGITHUB_PUBLISH_TOKEN=${{ secrets.SECRET_GITHUB_CODE }} -PGITHUB_REPO=${{ github.repository }} --no-daemon --stacktrace
+        run: ./gradlew :kbcore:kmmBridgePublish -PENABLE_PUBLISHING=true -PGIT_USER=${{ github.actor }} -PGITHUB_PUBLISH_TOKEN=${{ secrets.SECRET_GITHUB_CODE }} -PGITHUB_REPO=${{ github.repository }}
 
       - name: Delete branch
         if: always()

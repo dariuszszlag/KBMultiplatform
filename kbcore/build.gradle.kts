@@ -2,7 +2,6 @@ plugins {
     kotlin("multiplatform")
     id("com.android.library")
     id("maven-publish")
-    kotlin("plugin.serialization") version "1.8.10"
     id("co.touchlab.faktory.kmmbridge") version "0.3.7"
 }
 
