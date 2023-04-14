@@ -44,13 +44,11 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Build Release
-        run: ./gradlew :kbcore:kmmBridgePublish -PENABLE_PUBLISHING=true -PGITHUB_PUBLISH_TOKEN=${{ secrets.SECRET_GITHUB_CODE }} -PGITHUB_REPO=${{ github.repository }} --no-daemon --stacktrace
-        env:
-          GRADLE_OPTS: -Dkotlin.incremental=false -Dorg.gradle.jvmargs="-Xmx3g -XX:MaxPermSize=2048m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8 -XX:MaxMetaspaceSize=512m"
+        run: ./gradlew :kbcore:kmmBridgePublish -PENABLE_PUBLISHING=true -PGIT_USER=${{ github.actor }} -PGITHUB_PUBLISH_TOKEN=${{ secrets.SECRET_GITHUB_CODE }} -PGITHUB_REPO=${{ github.repository }} --no-daemon --stacktrace
 
       - name: Delete branch
         if: always()
         uses: touchlab/action-delete-branch@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.SECRET_GITHUB_CODE }}
           branches: "build-${{ steps.generate-uuid.outputs.uuid }}"
