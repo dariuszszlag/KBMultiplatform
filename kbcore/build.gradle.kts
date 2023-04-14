@@ -30,8 +30,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "kbcore"
-            isStatic = true
+            isStatic = false
         }
     }
 
@@ -127,6 +126,8 @@ tasks.withType<PublishToMavenRepository> {
     dependsOn(tasks.assemble)
 }
 
+addGithubPackagesRepository()
+
 kmmbridge {
     manualVersions()
     versionPrefix.set(System.getenv("VERSION_NAME"))
@@ -134,4 +135,3 @@ kmmbridge {
     mavenPublishArtifacts()
 }
 
-addGithubPackagesRepository()
