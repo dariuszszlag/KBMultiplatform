@@ -3,7 +3,7 @@ plugins {
     id("com.android.library")
     id("maven-publish")
     kotlin("plugin.serialization") version "1.8.10"
-    kotlin("native.cocoapods")
+    id("co.touchlab.faktory.kmmbridge") version "0.3.7"
 }
 
 group = "com.dariusz"
@@ -30,25 +30,8 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "shared"
-        }
-
-        cocoapods {
-            version = System.getenv("VERSION_NAME") ?: "0.1"
-            summary = "KBCore for KB"
-            homepage = "github.com/dariuszszlag/KBMultiplatform"
-            name = "kbcore"
-            source = Git(
-                url = uri("https://github.com/dariuszszlag/KBMultiplatform.git"),
-                tag = System.getenv("VERSION_NAME") ?: "0.1"
-            ).toString()
-            ios.deploymentTarget = "16.3.1"
-            license = License("MIT", "MIT License").toString()
-            podfile = project.file("../iosApp/Podfile")
-            framework {
-                isStatic = false
-                baseName = "shared"
-            }
+            baseName = "kbcore"
+            isStatic = true
         }
     }
 
@@ -144,10 +127,11 @@ tasks.withType<PublishToMavenRepository> {
     dependsOn(tasks.assemble)
 }
 
-private data class Git(val url: java.net.URI, val tag: String) {
-    override fun toString(): String = ":git => '$url', :tag => '$tag'"
+kmmbridge {
+    versionPrefix.set(System.getenv("VERSION_NAME"))
+    spm(spmDirectory = "../")
+    gitTagVersions()
+    mavenPublishArtifacts()
 }
 
-private data class License(val type: String, val text: String) {
-    override fun toString(): String = ":type => '$type', :text => '$text'"
-}
+addGithubPackagesRepository()

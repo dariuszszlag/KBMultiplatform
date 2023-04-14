@@ -1,8 +1,0 @@
-source 'https://github.com/CocoaPods/Specs.git'
-source 'https://github.com/dariuszszlag/KBMultiplatform.git'
-
-use_frameworks!
-
-target 'iosApp' do
-    pod 'kbcore', '~> 0.1.4'
-end

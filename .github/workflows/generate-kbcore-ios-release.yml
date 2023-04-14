@@ -1,5 +1,4 @@
 name: Create KBCore (iOS)
-
 on:
   push:
     tags:
@@ -8,13 +7,26 @@ on:
   workflow_dispatch:
 
 jobs:
-  publish:
-    name: Release KBCore
+  kmmbridgepublish:
+    name: Create KBCore for iOS with KMMBridge
+    concurrency: "kmmbridgepublish-${{ github.repository }}"
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Create random ID for branch name
+        id: generate-uuid
+        uses: filipstefansson/uuid-action@v1.1
+
+      - name: Create random branch
+        uses: peterjgrainger/action-create-branch@v2.4.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          fetch-depth: 0
+          branch: "build-${{ steps.generate-uuid.outputs.uuid }}"
+
+      - name: Checkout the repo
+        uses: actions/checkout@v3
+        with:
+          ref: "build-${{ steps.generate-uuid.outputs.uuid }}"
 
       - name: Change wrapper permissions
         run: chmod +x ./generate-version.bash
@@ -31,10 +43,14 @@ jobs:
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
 
-      - name: Publish XCFramework for iOS
-        run: |
-          ./gradlew :kbcore:podspec
-          ./gradlew :kbcore:podImport
-          ./gradlew :kbcore:podInstall
-          ./gradlew :kbcore:podPublishXCFramework
+      - name: Build Release
+        run: ./gradlew :kbcore:kmmBridgePublish -PENABLE_PUBLISHING=true -PGITHUB_PUBLISH_TOKEN=${{ secrets.SECRET_GITHUB_CODE }} -PGITHUB_REPO=${{ github.repository }} --no-daemon --stacktrace
+        env:
+          GRADLE_OPTS: -Dkotlin.incremental=false -Dorg.gradle.jvmargs="-Xmx3g -XX:MaxPermSize=2048m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8 -XX:MaxMetaspaceSize=512m"
 
+      - name: Delete branch
+        if: always()
+        uses: touchlab/action-delete-branch@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branches: "build-${{ steps.generate-uuid.outputs.uuid }}"
