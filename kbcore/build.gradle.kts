@@ -125,8 +125,6 @@ tasks.withType<PublishToMavenRepository> {
     dependsOn(tasks.assemble)
 }
 
-addGithubPackagesRepository()
-
 kmmbridge {
     manualVersions()
     versionPrefix.set(System.getenv("VERSION_NAME"))
