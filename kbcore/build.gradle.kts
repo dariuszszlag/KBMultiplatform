@@ -21,6 +21,18 @@ kotlin {
                 jvmTarget = "11"
             }
         }
+        publishing {
+            repositories {
+                maven {
+                    name = "GitHubPackages"
+                    url = uri("https://maven.pkg.github.com/dariuszszlag/KBMultiplatform")
+                    credentials {
+                        username = GIT_USER
+                        password = GIT_TOKEN
+                    }
+                }
+            }
+        }
     }
 
     listOf(
@@ -108,22 +120,11 @@ android {
     }
 }
 
-publishing {
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/dariuszszlag/KBMultiplatform")
-            credentials {
-                username = GIT_USER
-                password = GIT_TOKEN
-            }
-        }
-    }
-}
-
 tasks.withType<PublishToMavenRepository> {
     dependsOn(tasks.assemble)
 }
+
+addGithubPackagesRepository()
 
 kmmbridge {
     manualVersions()
