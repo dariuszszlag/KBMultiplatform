@@ -4,9 +4,9 @@ import PackageDescription
 let version = "0.1.17"
 
 let xcFrameworkUrl = "https://maven.pkg.github.com/dariuszszlag/KBMultiplatform/com/dariusz/kbcore-kmmbridge/\(version)/kbcore-kmmbridge-\(version).zip"
-let checksumUrl = "https://maven.pkg.github.com/dariuszszlag/KBMultiplatform/com/dariusz/kbcore-kmmbridge/\(version)/kbcore-kmmbridge-\(version).zip.md5"
+let checksumUrl = "https://maven.pkg.github.com/dariuszszlag/KBMultiplatform/com/dariusz/kbcore-kmmbridge/\(version)/kbcore-kmmbridge-\(version).zip.sha256"
 
-let checksumString = "be0ad295101624cda502e015347e909d"
+let checksumString = "3d484a39d3f2a037cdd7e7ca7a909e034552e03e957a2f20cf923e7a7e0f4719"
 
 let packageName = "kbcore"
 
