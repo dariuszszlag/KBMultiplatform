@@ -6,7 +6,7 @@ let version = "0.1.17"
 let xcFrameworkUrl = "https://maven.pkg.github.com/dariuszszlag/KBMultiplatform/com/dariusz/kbcore-kmmbridge/\(version)/kbcore-kmmbridge-\(version).zip"
 let checksumUrl = "https://maven.pkg.github.com/dariuszszlag/KBMultiplatform/com/dariusz/kbcore-kmmbridge/\(version)/kbcore-kmmbridge-\(version).zip.md5"
 
-let checksumString = Data(contentsOf: URL(string: checksumUrl))
+let checksumString = "be0ad295101624cda502e015347e909d"
 
 let packageName = "kbcore"
 
