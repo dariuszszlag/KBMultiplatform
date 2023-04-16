@@ -126,10 +126,28 @@ tasks.withType<PublishToMavenRepository> {
 }
 
 kmmbridge {
-    noGitOperations()
-    manualVersions()
-    versionPrefix.set(System.getenv("VERSION_NAME"))
+    generateVersion()
     spm(spmDirectory = "../")
     mavenPublishArtifacts()
 }
 
+fun co.touchlab.faktory.KmmBridgeExtension.generateVersion() {
+    versionManager.apply {
+        set(object: co.touchlab.faktory.versionmanager.VersionManager {
+            override val needsGitTags: Boolean
+                get() = false
+
+            override fun getVersion(
+                project: Project,
+                versionPrefix: String,
+                versionWriter: co.touchlab.faktory.versionmanager.VersionWriter
+            ): String = System.getenv("VERSION_NAME")
+
+        })
+        finalizeValue()
+    }
+    versionWriter.apply {
+        set(co.touchlab.faktory.versionmanager.NoOpVersionWriter)
+        finalizeValue()
+    }
+}
