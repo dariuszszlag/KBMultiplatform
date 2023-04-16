@@ -127,7 +127,7 @@ tasks.withType<PublishToMavenRepository> {
 
 kmmbridge {
     generateVersion()
-    spm(spmDirectory = "../")
+    spm()
     mavenPublishArtifacts()
 }
 
