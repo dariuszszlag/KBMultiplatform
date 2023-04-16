@@ -1,13 +1,19 @@
 // swift-tools-version:5.3
 import PackageDescription
 
-let environmentVersion = getenv("VERSION_NAME")
-let version = String(cString: environmentVersion)
+let version = "0.1.16"
 
 let xcFrameworkUrl = "https://maven.pkg.github.com/dariuszszlag/KBMultiplatform/com/dariusz/kbcore-kmmbridge/\(version)/kbcore-kmmbridge-\(version).zip"
 let checksumUrl = "https://maven.pkg.github.com/dariuszszlag/KBMultiplatform/com/dariusz/kbcore-kmmbridge/\(version)/kbcore-kmmbridge-\(version).zip.md5"
 
-let checksumString = String(contentsOf: checksumUrl)
+do {
+    guard let url = Bundle.main.url(forResource: checksumUrl, withExtension:"md5") else {
+        return
+    }
+    let checksumString = try Data(contentsOf: url)
+} catch {
+    print(error)
+}
 
 let packageName = "kbcore"
 
