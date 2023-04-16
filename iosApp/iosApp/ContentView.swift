@@ -1,5 +1,5 @@
 import SwiftUI
-import kbcore
+import kbmultiplatform
 
 struct ContentView: View {
 	let greet = Greeting().greet()
