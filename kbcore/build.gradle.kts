@@ -126,6 +126,7 @@ tasks.withType<PublishToMavenRepository> {
 }
 
 kmmbridge {
+    noGitOperations()
     manualVersions()
     versionPrefix.set(System.getenv("VERSION_NAME"))
     spm(spmDirectory = "../")
