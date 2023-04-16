@@ -1,9 +1,9 @@
 import SwiftUI
-import kbmultiplatform
 
 struct ContentView: View {
-	let greet = Greeting().greet()
 
+    let builder = kbCoreBuilder()
+    
 	var body: some View {
 		Text(greet)
 	}
