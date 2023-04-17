@@ -1,8 +1,7 @@
 // swift-tools-version:5.3
 import PackageDescription
-import Foundation
 
-let version = ProcessInfo.processInfo.environment["VERSION_NAME"] ?: "0.1.20"
+let version = "0.1.20"
 
 let xcFrameworkUrl = "https://maven.pkg.github.com/dariuszszlag/KBMultiplatform/com/dariusz/kbcore-kmmbridge/\(String(describing: version))/kbcore-kmmbridge-\(String(describing: version)).zip"
 
