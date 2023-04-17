@@ -1,5 +1,6 @@
 // swift-tools-version:5.3
 import PackageDescription
+import Foundation
 
 let version = ProcessInfo.processInfo.environment["VERSION_NAME"]
 
