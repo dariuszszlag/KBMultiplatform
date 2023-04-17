@@ -1,4 +1,4 @@
-name: Create KBSuite (android)
+name: Create KBSuite (Android)
 
 on:
   push:

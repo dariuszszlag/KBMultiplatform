@@ -1,4 +1,4 @@
-name: Create KBCore (android)
+name: Create KBCore (Android)
 
 on:
   push:
