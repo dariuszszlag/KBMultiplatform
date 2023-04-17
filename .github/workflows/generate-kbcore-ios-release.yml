@@ -57,3 +57,10 @@ jobs:
 
       - name: Build Release
         run: ./gradlew :kbcore:kmmBridgePublish -PENABLE_PUBLISHING=true -PGIT_USER=${{ github.actor }} -PGIT_TOKEN=${{ secrets.SECRET_GITHUB_CODE }} -PGITHUB_REPO=${{ github.repository }}
+
+      - name: Delete random branch
+        if: always()
+        uses: touchlab/action-delete-branch@v3
+        with:
+          github_token: ${{ secrets.SECRET_GITHUB_CODE }}
+          branches: "build-${{ steps.generate-uuid.outputs.uuid }}"
