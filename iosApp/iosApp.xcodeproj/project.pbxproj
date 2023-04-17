@@ -421,7 +421,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/dariuszszlag/KBMultiplatform.git";
 			requirement = {
-				branch = "prepare-ios-app";
+				branch = main;
 				kind = branch;
 			};
 		};

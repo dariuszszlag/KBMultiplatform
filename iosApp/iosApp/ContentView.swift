@@ -8,7 +8,7 @@ struct ContentView: View {
         .build()
     
 	var body: some View {
-		Text(greet)
+		Text("Hello")
 	}
     
 }
