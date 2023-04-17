@@ -2,7 +2,7 @@ plugins {
     kotlin("multiplatform")
     id("com.android.library")
     id("maven-publish")
-    kotlin("plugin.serialization") version "1.8.10"
+    id("co.touchlab.faktory.kmmbridge") version "0.3.7"
 }
 
 group = "com.dariusz"
@@ -12,6 +12,7 @@ val GIT_USER: String? by project
 val GIT_TOKEN: String? by project
 
 kotlin {
+
     android {
         publishLibraryVariants("release")
         publishLibraryVariantsGroupedByFlavor = true
@@ -28,7 +29,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "shared"
+            isStatic = false
         }
     }
 
@@ -76,6 +77,7 @@ kotlin {
             iosSimulatorArm64Test.dependsOn(this)
         }
     }
+
 }
 
 android {
@@ -123,7 +125,29 @@ tasks.withType<PublishToMavenRepository> {
     dependsOn(tasks.assemble)
 }
 
-configurations {
-    kotlinCompilerClasspath
+kmmbridge {
+    generateVersion()
+    spm()
+    mavenPublishArtifacts()
 }
 
+fun co.touchlab.faktory.KmmBridgeExtension.generateVersion() {
+    versionManager.apply {
+        set(object: co.touchlab.faktory.versionmanager.VersionManager {
+            override val needsGitTags: Boolean
+                get() = false
+
+            override fun getVersion(
+                project: Project,
+                versionPrefix: String,
+                versionWriter: co.touchlab.faktory.versionmanager.VersionWriter
+            ): String = System.getenv("VERSION_NAME")
+
+        })
+        finalizeValue()
+    }
+    versionWriter.apply {
+        set(co.touchlab.faktory.versionmanager.NoOpVersionWriter)
+        finalizeValue()
+    }
+}

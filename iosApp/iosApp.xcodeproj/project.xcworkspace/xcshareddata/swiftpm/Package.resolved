@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "kbmultiplatform",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dariuszszlag/KBMultiplatform.git",
+      "state" : {
+        "branch" : "prepare-ios-app",
+        "revision" : "287d2d509ebc00d74877ce3e99c70a9bfe246ba4"
+      }
+    }
+  ],
+  "version" : 2
+}

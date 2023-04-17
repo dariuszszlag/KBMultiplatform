@@ -1,12 +1,16 @@
 import SwiftUI
-import shared
+import kbcore
 
 struct ContentView: View {
-	let greet = Greeting().greet()
 
+    let builder = KBCoreIOSBuilder()
+        .coroutineDispatcher(coroutineDispatcher: <#T##Kotlinx_coroutines_coreCoroutineDispatcher#>)
+        .build()
+    
 	var body: some View {
 		Text(greet)
 	}
+    
 }
 
 struct ContentView_Previews: PreviewProvider {

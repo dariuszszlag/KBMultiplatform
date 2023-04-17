@@ -1,15 +1,15 @@
-name: Create KBCore release
+name: Create KBEmbed
 
 on:
   push:
     tags:
-      - "v*.*.*-CORE"
+      - "v*.*.*-embed"
 
   workflow_dispatch:
 
 jobs:
   publish:
-    name: Release KBCore
+    name: Release KBEmbed
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -35,4 +35,4 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Publish to GitHub Package Registry 🚀
-        run: ./gradlew :kbcore:publish -PGIT_USER=${{ github.actor }} -PGIT_TOKEN=${{ secrets.SECRET_GITHUB_CODE }}
+        run: ./gradlew :kbembed:publish -PGIT_USER=${{ github.actor }} -PGIT_TOKEN=${{ secrets.SECRET_GITHUB_CODE }}
