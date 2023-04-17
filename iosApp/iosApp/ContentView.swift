@@ -1,8 +1,11 @@
 import SwiftUI
+import kbcore
 
 struct ContentView: View {
 
-    let builder = kbCoreBuilder()
+    let builder = KBCoreIOSBuilder()
+        .coroutineDispatcher(coroutineDispatcher: <#T##Kotlinx_coroutines_coreCoroutineDispatcher#>)
+        .build()
     
 	var body: some View {
 		Text(greet)
