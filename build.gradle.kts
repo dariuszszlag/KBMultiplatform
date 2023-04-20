@@ -7,14 +7,6 @@ plugins {
 
 }
 
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-
 subprojects {
     // TODO libs doesn't resolve if we do this
     // apply(plugin = libs.plugins.ktlint.get().pluginId)

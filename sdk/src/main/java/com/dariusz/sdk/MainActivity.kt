@@ -2,7 +2,6 @@ package com.dariusz.sdk
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import com.dariusz.kbcore.kbCoreBuilder
