@@ -45,8 +45,8 @@ android {
 }
 
 dependencies {
-    api(project(":kbembed"))
-    api(project(":kbcore"))
+    api("com.dariusz:kbcore-android:0.1.1") { isTransitive = true }
+    api("com.dariusz:kbembed:0.1.10") { isTransitive = true }
     api("androidx.core:core-ktx:1.7.0")
     api("androidx.appcompat:appcompat:1.6.1")
     api("com.google.android.material:material:1.8.0")
