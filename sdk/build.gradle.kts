@@ -75,10 +75,12 @@ publishing {
                 val dependenciesNode = asNode().appendNode("dependencies")
                 //Iterate over the compile dependencies (we don't want the test ones), adding a <dependency> node for each
                 configurations.api.get().allDependencies.forEach {
-                    val dependencyNode = dependenciesNode.appendNode ("dependency")
-                    dependencyNode.appendNode("groupId", it.group)
-                    dependencyNode.appendNode("artifactId", it.name)
-                    dependencyNode.appendNode("version", it.version)
+                    if(it.group == groupId) {
+                        val dependencyNode = dependenciesNode.appendNode ("dependency")
+                        dependencyNode.appendNode("groupId", it.group)
+                        dependencyNode.appendNode("artifactId", it.name)
+                        dependencyNode.appendNode("version", it.version)
+                    }
                 }
             }
         }
