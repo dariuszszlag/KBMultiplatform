@@ -3,7 +3,7 @@
 
     <application>
         <activity
-            android:name=".MainActivity"
+            android:name="com.dariusz.kbembed.MainActivity"
             android:exported="true" />
     </application>
 

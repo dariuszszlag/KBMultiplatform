@@ -32,4 +32,3 @@ rootProject.name = "KBMultiApp"
 include(":androidApp")
 include(":kbcore")
 include(":kbembed")
-include(":sdk")

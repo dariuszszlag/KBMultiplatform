@@ -11,7 +11,7 @@ val GIT_TOKEN: String? by project
 
 kotlin {
     android {
-      /*  publishLibraryVariants("release")
+/*      *//*  publishLibraryVariants("release")
         publishLibraryVariantsGroupedByFlavor = true*/
         compilations.all {
             kotlinOptions {

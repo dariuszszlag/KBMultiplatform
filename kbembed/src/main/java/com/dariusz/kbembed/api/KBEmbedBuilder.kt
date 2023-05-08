@@ -1,4 +1,4 @@
-package com.dariusz.kbembed
+package com.dariusz.kbembed.api
 
 import androidx.activity.ComponentActivity
 import com.dariusz.kbcore.KBCore

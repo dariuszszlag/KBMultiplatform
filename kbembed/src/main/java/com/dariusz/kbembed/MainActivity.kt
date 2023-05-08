@@ -1,11 +1,9 @@
-package com.dariusz.sdk
+package com.dariusz.kbembed
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import com.dariusz.kbcore.kbCoreBuilder
-import com.dariusz.kbembed.kbEmbedBuilder
+import com.dariusz.kbembed.api.kbEmbedBuilder
 import kotlinx.coroutines.Dispatchers
 
 class MainActivity : ComponentActivity() {
@@ -18,9 +16,5 @@ class MainActivity : ComponentActivity() {
             .setActivity(this)
             .setKBCore(kbCore)
             .build()
-    }
-
-    companion object {
-        fun intent(from: Context) = Intent(from, MainActivity::class.java)
     }
 }

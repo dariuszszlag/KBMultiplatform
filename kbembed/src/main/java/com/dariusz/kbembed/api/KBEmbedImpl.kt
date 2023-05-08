@@ -1,4 +1,4 @@
-package com.dariusz.kbembed
+package com.dariusz.kbembed.api
 
 import com.dariusz.kbcore.KBCore
 import com.dariusz.kbembed.navigation.Navigator
