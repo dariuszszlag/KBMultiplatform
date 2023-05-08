@@ -90,7 +90,7 @@ publishing {
             description = "kbembed version of KB"
             groupId = "com.dariusz"
             artifactId = "kbembed"
-            version = "0.10.1"//System.getenv("VERSION_NAME")
+            version = System.getenv("VERSION_NAME")
             artifact("$buildDir/outputs/aar/${artifactId}-release.aar")
             artifact(sourceJar)
 
