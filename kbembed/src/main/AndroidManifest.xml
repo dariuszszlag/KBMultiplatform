@@ -8,6 +8,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KBMultiApp">
 
+        <activity
+            android:name="com.dariusz.kbembed.MainActivity"
+            android:exported="true" />
+
     </application>
 
 </manifest>
