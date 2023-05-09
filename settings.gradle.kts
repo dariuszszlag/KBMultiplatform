@@ -4,7 +4,7 @@ pluginManagement {
             url = uri("https://maven.pkg.github.com/dariuszszlag/KBMultiplatform")
             credentials {
                 username = "dariuszszlag"
-                password = "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"//System.getenv("ACCESS_TOKEN")
+                password = System.getenv("ACCESS_TOKEN")
             }
         }
         google()
@@ -19,7 +19,7 @@ dependencyResolutionManagement {
             url = uri("https://maven.pkg.github.com/dariuszszlag/KBMultiplatform")
             credentials {
                 username = "dariuszszlag"
-                password = "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"//System.getenv("ACCESS_TOKEN")
+                password = System.getenv("ACCESS_TOKEN")
             }
         }
         google()
