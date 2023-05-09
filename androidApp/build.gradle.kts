@@ -21,7 +21,8 @@ android {
     }
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = false
+            isDebuggable = false
+            isMinifyEnabled = true
         }
     }
     compileOptions {
@@ -34,7 +35,7 @@ android {
 }
 
 dependencies {
-    implementation("com.dariusz:kbembed:0.1.13")
+    implementation("com.dariusz:kbembed:0.1.14")
     implementation(platform("androidx.compose:compose-bom:2023.01.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-tooling")
