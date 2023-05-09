@@ -55,7 +55,6 @@ android {
 }
 
 dependencies {
-    //implementation(project(":kbcore"))
     implementation("com.dariusz:kbcore-android:0.1.1")
     implementation(platform("androidx.compose:compose-bom:2023.01.00"))
     implementation("androidx.compose.ui:ui")
@@ -94,10 +93,10 @@ publishing {
             artifact("$buildDir/outputs/aar/${artifactId}-release.aar")
             artifact(sourceJar)
 
-     /*       pom.withXml {
+            pom.withXml {
                 val dependenciesNode = asNode().appendNode("dependencies")
                 //Iterate over the compile dependencies (we don't want the test ones), adding a <dependency> node for each
-                configurations.api.get().allDependencies.forEach {
+                configurations.implementation.get().allDependencies.forEach {
                     if(it.group == groupId) {
                         val dependencyNode = dependenciesNode.appendNode ("dependency")
                         dependencyNode.appendNode("groupId", it.group)
@@ -105,13 +104,13 @@ publishing {
                         dependencyNode.appendNode("version", it.version)
                     }
                 }
-            }*/
+            }
         }
     }
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri(/*"$buildDir/kbembed/"*/"https://maven.pkg.github.com/dariuszszlag/KBMultiplatform")
+            url = uri("https://maven.pkg.github.com/dariuszszlag/KBMultiplatform")
             credentials {
                 username = GIT_USER
                 password = GIT_TOKEN
