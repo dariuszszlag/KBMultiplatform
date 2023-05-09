@@ -9,7 +9,7 @@ on:
 
 jobs:
   publish:
-    name: Release Sdk
+    name: Release KB-Core
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -35,4 +35,4 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Publish to GitHub Package Registry 🚀
-        run: ./gradlew :sdk:publish -PGIT_USER=${{ github.actor }} -PGIT_TOKEN=${{ secrets.SECRET_GITHUB_CODE }}
+        run: ./gradlew :kbcore:publish -PGIT_USER=${{ github.actor }} -PGIT_TOKEN=${{ secrets.SECRET_GITHUB_CODE }}
