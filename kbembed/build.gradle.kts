@@ -55,7 +55,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":kbcore"))
+    api(project(":kbcore"))
     implementation(platform("androidx.compose:compose-bom:2023.01.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-tooling")
@@ -79,15 +79,6 @@ dependencies {
 }
 
 publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            description = "Embed version of KB"
-            groupId = "com.dariusz"
-            artifactId = "kbembed"
-            version = System.getenv("VERSION_NAME")
-            artifact("$buildDir/outputs/aar/${artifactId}-release.aar")
-        }
-    }
     repositories {
         maven {
             name = "GitHubPackages"
