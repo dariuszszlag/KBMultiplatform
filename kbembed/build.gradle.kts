@@ -79,6 +79,15 @@ dependencies {
 }
 
 publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            description = "Embed version of KB"
+            groupId = "com.dariusz"
+            artifactId = "kbembed"
+            version = System.getenv("VERSION_NAME")
+            artifact("$buildDir/outputs/aar/${artifactId}-release.aar")
+        }
+    }
     repositories {
         maven {
             name = "GitHubPackages"
